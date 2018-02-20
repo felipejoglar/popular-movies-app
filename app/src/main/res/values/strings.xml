@@ -15,4 +15,7 @@ limitations under the License.
 -->
 <resources>
     <string name="app_name">Popular Movies</string>
+
+    <!-- MOVIES LIST -->
+    <string name="default_image_content_description">Movie poster</string>
 </resources>

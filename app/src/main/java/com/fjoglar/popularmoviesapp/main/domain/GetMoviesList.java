@@ -26,19 +26,19 @@ import io.reactivex.Scheduler;
  * This class is an implementation of {@link UseCase} that represents a use case for
  * retrieving the welcome message.
  */
-public class GetWelcomeMessage extends UseCase<String> {
+public class GetMoviesList extends UseCase<String[]> {
 
     private final DataSource mRepository;
 
-    public GetWelcomeMessage(DataSource repository,
-                             Scheduler threadExecutor,
-                             Scheduler postExecutionThread) {
+    public GetMoviesList(DataSource repository,
+                         Scheduler threadExecutor,
+                         Scheduler postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mRepository = repository;
     }
 
     @Override
-    public Observable<String> buildUseCaseObservable() {
-        return mRepository.getWelcomeMessage();
+    public Observable<String[]> buildUseCaseObservable() {
+        return mRepository.getMoviesList();
     }
 }

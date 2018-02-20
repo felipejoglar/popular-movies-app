@@ -20,7 +20,7 @@ import android.support.annotation.NonNull;
 
 import com.fjoglar.popularmoviesapp.DefaultObserver;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
-import com.fjoglar.popularmoviesapp.main.domain.GetWelcomeMessage;
+import com.fjoglar.popularmoviesapp.main.domain.GetMoviesList;
 import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
 
 public class MainPresenter implements MainContract.Presenter {
@@ -34,7 +34,7 @@ public class MainPresenter implements MainContract.Presenter {
     @NonNull
     private final BaseSchedulerProvider mSchedulerProvider;
 
-    private final GetWelcomeMessage mGetWelcomeMessage;
+    private final GetMoviesList mGetMoviesList;
 
     public MainPresenter(@NonNull DataSource repository,
                          @NonNull MainContract.View mainView,
@@ -45,32 +45,32 @@ public class MainPresenter implements MainContract.Presenter {
 
         mMainView.setPresenter(this);
 
-        mGetWelcomeMessage = new GetWelcomeMessage(mRepository,
-                                                   mSchedulerProvider.computation(),
-                                                   mSchedulerProvider.ui());
+        mGetMoviesList = new GetMoviesList(mRepository,
+                mSchedulerProvider.computation(),
+                mSchedulerProvider.ui());
     }
 
     @Override
     public void subscribe() {
         mMainView.showLoading();
-        getWelcomeMessage();
+        getMoviesList();
     }
 
     @Override
     public void unsubscribe() {
-        mGetWelcomeMessage.dispose();
+        mGetMoviesList.dispose();
     }
 
     @Override
-    public void getWelcomeMessage() {
-        mGetWelcomeMessage.execute(new WelcomeMessageObserver());
+    public void getMoviesList() {
+        mGetMoviesList.execute(new MoviesListObserver());
     }
 
-    private final class WelcomeMessageObserver extends DefaultObserver<String> {
+    private final class MoviesListObserver extends DefaultObserver<String[]> {
 
         @Override
-        public void onNext(String welcomeMessage) {
-            mMainView.showWelcomeMessage(welcomeMessage);
+        public void onNext(String[] moviesList) {
+            mMainView.showMoviesList(moviesList);
         }
 
         @Override

@@ -23,7 +23,7 @@ public interface MainContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showWelcomeMessage(String message);
+        void showMoviesList(String[] moviesList);
 
         void showLoading();
 
@@ -32,7 +32,7 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
 
-        void getWelcomeMessage();
+        void getMoviesList();
 
     }
 

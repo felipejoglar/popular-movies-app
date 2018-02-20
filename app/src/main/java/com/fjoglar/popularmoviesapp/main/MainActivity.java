@@ -19,9 +19,11 @@ package com.fjoglar.popularmoviesapp.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.source.Repository;
@@ -31,9 +33,12 @@ import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
-    private MainContract.Presenter mMainPresenter;
+    private static final int COLUMN_NUMBER = 2;
 
-    private TextView mTxtWelcomeMessage;
+    private MainContract.Presenter mMainPresenter;
+    private MoviesListAdapter mMoviesListAdapter;
+
+    private RecyclerView mRvMoviesList;
     private ProgressBar mProgressLoading;
 
     @Override
@@ -41,14 +46,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTxtWelcomeMessage = (TextView) findViewById(R.id.txt_welcome_message);
-        mProgressLoading = (ProgressBar) findViewById(R.id.progress_loading);
+        mRvMoviesList = findViewById(R.id.rv_movieslist);
+        mProgressLoading = findViewById(R.id.progress_loading);
 
         mMainPresenter = new MainPresenter(
                 Repository.getInstance(RemoteDataSource.getInstance(),
                         LocalDataSource.getInstance()),
                 this,
                 SchedulerProvider.getInstance());
+
+        setUpRecyclerView();
     }
 
     @Override
@@ -84,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showWelcomeMessage(String message) {
-        mTxtWelcomeMessage.setText(message);
+    public void showMoviesList(String[] moviesList) {
+        mMoviesListAdapter.setWMoviesData(moviesList);
     }
 
     @Override
@@ -96,5 +103,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void hideLoading() {
         mProgressLoading.setVisibility(View.GONE);
+    }
+
+    private void setUpRecyclerView() {
+        GridLayoutManager layoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
+        mMoviesListAdapter = new MoviesListAdapter(this);
+
+        mRvMoviesList.setLayoutManager(layoutManager);
+        mRvMoviesList.setHasFixedSize(true);
+        mRvMoviesList.setAdapter(mMoviesListAdapter);
     }
 }

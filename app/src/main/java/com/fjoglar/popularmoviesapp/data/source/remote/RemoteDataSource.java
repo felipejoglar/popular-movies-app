@@ -59,11 +59,16 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String> getWelcomeMessage() {
+    public Observable<String[]> getMoviesList() {
 
-        final String WELCOME_MESSAGE = "Hello World!";
+        final String POSTER_URL = "https://image.tmdb.org/t/p/w500/q0R4crx2SehcEEQEkYObktdeFy.jpg";
+        String[] fakeMovies = new String[10];
 
-        return Observable.just(WELCOME_MESSAGE)
+        for (int i = 0; i < 10; i++) {
+            fakeMovies[i] = POSTER_URL;
+        }
+
+        return Observable.just(fakeMovies)
                          .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS);
     }
 }
