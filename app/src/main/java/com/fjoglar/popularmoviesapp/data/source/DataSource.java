@@ -20,5 +20,5 @@ import io.reactivex.Observable;
 
 public interface DataSource {
 
-    Observable<String[]> getMoviesList();
+    Observable<String[]> getMovies();
 }

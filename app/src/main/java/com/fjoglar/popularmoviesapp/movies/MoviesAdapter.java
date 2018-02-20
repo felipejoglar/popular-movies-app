@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.main;
+package com.fjoglar.popularmoviesapp.movies;
 
 import android.content.Context;
-import android.nfc.Tag;
-import android.os.Debug;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +26,14 @@ import android.widget.ImageView;
 import com.fjoglar.popularmoviesapp.R;
 import com.squareup.picasso.Picasso;
 
-public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-    private static final String TAG = MoviesListAdapter.class.getSimpleName();
+    private static final String TAG = MoviesAdapter.class.getSimpleName();
 
-    private String[] mMoviesList;
+    private String[] mMovies;
     private Context mContext;
 
-    public MoviesListAdapter(Context context) {
+    public MoviesAdapter(Context context) {
         mContext = context;
     }
 
@@ -51,30 +48,29 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Picasso.with(mContext)
-                .load(mMoviesList[position])
-                .into(holder.mPosterIv);
-        Log.d(TAG, "Load image...");
+                .load(mMovies[position])
+                .into(holder.mImgPoster);
     }
 
     @Override
     public int getItemCount() {
-        if (null == mMoviesList) return 0;
-        return mMoviesList.length;
+        if (null == mMovies) return 0;
+        return mMovies.length;
     }
 
-    public void setWMoviesData(String[] moviesData) {
-        mMoviesList = moviesData;
+    public void setMoviesData(String[] moviesData) {
+        mMovies = moviesData;
         notifyDataSetChanged();
     }
 
     // Provide a reference to the views for each data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView mPosterIv;
+        ImageView mImgPoster;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mPosterIv = itemView.findViewById(R.id.img_poster);
+            mImgPoster = itemView.findViewById(R.id.img_poster);
         }
     }
 }

@@ -65,14 +65,14 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public Observable<String[]> getMoviesList() {
+    public Observable<String[]> getMovies() {
 
         final float REMOTE_ACCESS_RATE = 0.30f;
 
         if (new Random().nextFloat() > REMOTE_ACCESS_RATE) {
-            return mLocalDataSource.getMoviesList();
+            return mLocalDataSource.getMovies();
         } else {
-            return mRemoteDataSource.getMoviesList();
+            return mRemoteDataSource.getMovies();
         }
     }
 }

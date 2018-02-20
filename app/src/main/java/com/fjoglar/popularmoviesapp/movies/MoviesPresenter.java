@@ -14,68 +14,68 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.main;
+package com.fjoglar.popularmoviesapp.movies;
 
 import android.support.annotation.NonNull;
 
-import com.fjoglar.popularmoviesapp.DefaultObserver;
+import com.fjoglar.popularmoviesapp.base.BaseObserver;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
-import com.fjoglar.popularmoviesapp.main.domain.GetMoviesList;
+import com.fjoglar.popularmoviesapp.movies.domain.GetMovies;
 import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MoviesPresenter implements MoviesContract.Presenter {
 
     @NonNull
     private final DataSource mRepository;
 
     @NonNull
-    private final MainContract.View mMainView;
+    private final MoviesContract.View mMoviesView;
 
     @NonNull
     private final BaseSchedulerProvider mSchedulerProvider;
 
-    private final GetMoviesList mGetMoviesList;
+    private final GetMovies mGetMovies;
 
-    public MainPresenter(@NonNull DataSource repository,
-                         @NonNull MainContract.View mainView,
-                         @NonNull BaseSchedulerProvider schedulerProvider) {
+    public MoviesPresenter(@NonNull DataSource repository,
+                           @NonNull MoviesContract.View mainView,
+                           @NonNull BaseSchedulerProvider schedulerProvider) {
         mRepository = repository;
-        mMainView = mainView;
+        mMoviesView = mainView;
         mSchedulerProvider = schedulerProvider;
 
-        mMainView.setPresenter(this);
+        mMoviesView.setPresenter(this);
 
-        mGetMoviesList = new GetMoviesList(mRepository,
+        mGetMovies = new GetMovies(mRepository,
                 mSchedulerProvider.computation(),
                 mSchedulerProvider.ui());
     }
 
     @Override
     public void subscribe() {
-        mMainView.showLoading();
-        getMoviesList();
+        mMoviesView.showLoading();
+        getMovies();
     }
 
     @Override
     public void unsubscribe() {
-        mGetMoviesList.dispose();
+        mGetMovies.dispose();
     }
 
     @Override
-    public void getMoviesList() {
-        mGetMoviesList.execute(new MoviesListObserver());
+    public void getMovies() {
+        mGetMovies.execute(new MoviesListObserver());
     }
 
-    private final class MoviesListObserver extends DefaultObserver<String[]> {
+    private final class MoviesListObserver extends BaseObserver<String[]> {
 
         @Override
         public void onNext(String[] moviesList) {
-            mMainView.showMoviesList(moviesList);
+            mMoviesView.showMovies(moviesList);
         }
 
         @Override
         public void onComplete() {
-            mMainView.hideLoading();
+            mMoviesView.hideLoading();
         }
 
         @Override

@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.main;
+package com.fjoglar.popularmoviesapp.base;
 
-import com.fjoglar.popularmoviesapp.BasePresenter;
-import com.fjoglar.popularmoviesapp.BaseView;
+import com.fjoglar.popularmoviesapp.base.BasePresenter;
 
-public interface MainContract {
+public interface BaseView<T extends BasePresenter> {
 
-    interface View extends BaseView<Presenter> {
-
-        void showMoviesList(String[] moviesList);
-
-        void showLoading();
-
-        void hideLoading();
-    }
-
-    interface Presenter extends BasePresenter {
-
-        void getMoviesList();
-
-    }
+    void setPresenter(T presenter);
 
 }

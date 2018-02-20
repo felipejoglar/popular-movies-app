@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp;
+package com.fjoglar.popularmoviesapp.base;
 
 public interface BasePresenter {
 

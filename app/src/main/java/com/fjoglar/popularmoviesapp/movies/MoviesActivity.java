@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.main;
+package com.fjoglar.popularmoviesapp.movies;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -31,25 +30,25 @@ import com.fjoglar.popularmoviesapp.data.source.local.LocalDataSource;
 import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
 import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MoviesActivity extends AppCompatActivity implements MoviesContract.View {
 
     private static final int COLUMN_NUMBER = 2;
 
-    private MainContract.Presenter mMainPresenter;
-    private MoviesListAdapter mMoviesListAdapter;
+    private MoviesContract.Presenter mMainPresenter;
+    private MoviesAdapter mMoviesAdapter;
 
-    private RecyclerView mRvMoviesList;
+    private RecyclerView mRvMovies;
     private ProgressBar mProgressLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movies);
 
-        mRvMoviesList = findViewById(R.id.rv_movieslist);
+        mRvMovies = findViewById(R.id.rv_movies);
         mProgressLoading = findViewById(R.id.progress_loading);
 
-        mMainPresenter = new MainPresenter(
+        mMainPresenter = new MoviesPresenter(
                 Repository.getInstance(RemoteDataSource.getInstance(),
                         LocalDataSource.getInstance()),
                 this,
@@ -86,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void setPresenter(@NonNull MainContract.Presenter presenter) {
+    public void setPresenter(@NonNull MoviesContract.Presenter presenter) {
         mMainPresenter = presenter;
     }
 
     @Override
-    public void showMoviesList(String[] moviesList) {
-        mMoviesListAdapter.setWMoviesData(moviesList);
+    public void showMovies(String[] movies) {
+        mMoviesAdapter.setMoviesData(movies);
     }
 
     @Override
@@ -107,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void setUpRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
-        mMoviesListAdapter = new MoviesListAdapter(this);
+        mMoviesAdapter = new MoviesAdapter(this);
 
-        mRvMoviesList.setLayoutManager(layoutManager);
-        mRvMoviesList.setHasFixedSize(true);
-        mRvMoviesList.setAdapter(mMoviesListAdapter);
+        mRvMovies.setLayoutManager(layoutManager);
+        mRvMovies.setHasFixedSize(true);
+        mRvMovies.setAdapter(mMoviesAdapter);
     }
 }

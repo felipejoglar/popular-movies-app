@@ -55,7 +55,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String[]> getMoviesList() {
+    public Observable<String[]> getMovies() {
 
         final String POSTER_URL = "https://image.tmdb.org/t/p/w500/q0R4crx2SehcEEQEkYObktdeFy.jpg";
         String[] fakeMovies = new String[10];
