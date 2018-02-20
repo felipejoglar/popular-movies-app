@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        applicationId "com.fjoglar.popularmoviesapp"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    /** A debug keystore which is used to sign an Android app during development needs a
+     * specific alias and password combination as dictated by Google.
+     *
+     * To create a debug keystore, use:
+     *
+     *  $ keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey
+     *           -keypass android -keyalg RSA -keysize 2048 -validity 10000
+     */
+    signingConfigs {
+        debug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+            storeFile file('../keystore/debug.keystore')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+ext {
+    supportLibVersion = '27.0.2'
+    constraintLayoutVersion = '1.0.2'
+    rxJavaVersion = '2.1.9'
+    rxAndroidVersion = '2.0.2'
+
+    jUnitVersion = '4.12'
+    espressoCoreVersion = '3.0.1'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Android Framework Libraries
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
+
+    // Reactive Libraries
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    // Testing Libraries
+    testImplementation "junit:junit:${jUnitVersion}"
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espressoCoreVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
