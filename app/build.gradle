@@ -55,6 +55,7 @@ ext {
     constraintLayoutVersion = '1.0.2'
     rxJavaVersion = '2.1.9'
     rxAndroidVersion = '2.0.2'
+    gsonVersion = '2.8.2'
     picassoVersion = '2.5.2'
 
     jUnitVersion = '4.12'
@@ -72,6 +73,9 @@ dependencies {
     // Reactive Libraries
     implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    // JSON & Networking Libraries
+    implementation "com.google.code.gson:gson:${gsonVersion}"
 
     // UI Libraries
     implementation "com.squareup.picasso:picasso:${picassoVersion}"
