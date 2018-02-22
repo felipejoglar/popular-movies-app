@@ -33,11 +33,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     private static final String TAG = MoviesAdapter.class.getSimpleName();
 
+    private final MovieClickListener mOnClickListener;
+
     private List<Movie> mMovies;
     private Context mContext;
 
-    public MoviesAdapter(Context context) {
+    public MoviesAdapter(Context context, MovieClickListener listener) {
         mContext = context;
+        mOnClickListener = listener;
     }
 
     @Override
@@ -68,13 +71,24 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     // Provide a reference to the views for each data item
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView mImgPoster;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mImgPoster = itemView.findViewById(R.id.img_poster);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            mOnClickListener.onMovieClick(mMovies.get(getAdapterPosition()).getTitle());
+        }
+    }
+
+    public interface MovieClickListener {
+        void onMovieClick(String movieTitle);
     }
 }

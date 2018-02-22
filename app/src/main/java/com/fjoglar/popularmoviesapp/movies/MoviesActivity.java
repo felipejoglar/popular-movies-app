@@ -23,6 +23,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
@@ -33,9 +34,12 @@ import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
 import java.util.List;
 
-public class MoviesActivity extends AppCompatActivity implements MoviesContract.View {
+public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
+        MoviesAdapter.MovieClickListener {
 
     private static final int COLUMN_NUMBER = 2;
+
+    private Toast mToast;
 
     private MoviesContract.Presenter mMainPresenter;
     private MoviesAdapter mMoviesAdapter;
@@ -107,9 +111,21 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mProgressLoading.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onMovieClick(String movieTitle) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        mToast = Toast.makeText(this,
+                movieTitle,
+                Toast.LENGTH_LONG);
+        mToast.show();
+    }
+
     private void setUpRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
-        mMoviesAdapter = new MoviesAdapter(this);
+        mMoviesAdapter = new MoviesAdapter(this, this);
 
         mRvMovies.setLayoutManager(layoutManager);
         mRvMovies.setHasFixedSize(true);
