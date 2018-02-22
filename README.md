@@ -11,11 +11,15 @@ First you need to get an API key from [The Movie Database](https://www.themovied
 
 Then inside the `gradle.properties` file substitute `your_tmdb_api_key_here` with your actual API key and add this file to your .gitignore to avoid pushing your key to your public repository.
 
-``` groovy
+```
 # The Movie Database Api Key
 tmdbApiKey = "your_tmdb_api_key_here"
 ```
+Or just run the following git command to tell git not to track the file:
 
+```
+git update-index --assume-unchanged gradle.properties
+```
 
 ## Languages, libraries and tools used
 
