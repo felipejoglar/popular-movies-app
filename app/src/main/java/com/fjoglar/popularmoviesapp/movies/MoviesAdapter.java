@@ -24,13 +24,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.fjoglar.popularmoviesapp.R;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
     private static final String TAG = MoviesAdapter.class.getSimpleName();
 
-    private String[] mMovies;
+    private List<Movie> mMovies;
     private Context mContext;
 
     public MoviesAdapter(Context context) {
@@ -48,17 +51,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Picasso.with(mContext)
-                .load(mMovies[position])
+                .load("http://image.tmdb.org/t/p/original" +
+                        mMovies.get(position).getPosterPath())
                 .into(holder.mImgPoster);
     }
 
     @Override
     public int getItemCount() {
         if (null == mMovies) return 0;
-        return mMovies.length;
+        return mMovies.size();
     }
 
-    public void setMoviesData(String[] moviesData) {
+    public void setMoviesData(List<Movie> moviesData) {
         mMovies = moviesData;
         notifyDataSetChanged();
     }

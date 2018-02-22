@@ -43,6 +43,10 @@ android {
         }
     }
 
+    buildTypes.each {
+        it.buildConfigField 'String', 'TMDB_API_KEY', tmdbApiKey
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -56,6 +60,8 @@ ext {
     rxJavaVersion = '2.1.9'
     rxAndroidVersion = '2.0.2'
     gsonVersion = '2.8.2'
+    retrofitVersion = '2.3.0'
+    adapterRxJava2Version = '2.3.0'
     picassoVersion = '2.5.2'
 
     jUnitVersion = '4.12'
@@ -76,6 +82,9 @@ dependencies {
 
     // JSON & Networking Libraries
     implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxJava2Version}"
 
     // UI Libraries
     implementation "com.squareup.picasso:picasso:${picassoVersion}"

@@ -17,7 +17,11 @@
 package com.fjoglar.popularmoviesapp.movies.domain;
 
 import com.fjoglar.popularmoviesapp.UseCase;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -26,7 +30,7 @@ import io.reactivex.Scheduler;
  * This class is an implementation of {@link UseCase} that represents a use case for
  * retrieving the welcome message.
  */
-public class GetMovies extends UseCase<String[]> {
+public class GetMovies extends UseCase<List<Movie>> {
 
     private final DataSource mRepository;
 
@@ -38,7 +42,7 @@ public class GetMovies extends UseCase<String[]> {
     }
 
     @Override
-    public Observable<String[]> buildUseCaseObservable() {
+    public Observable<List<Movie>> buildUseCaseObservable() {
         return mRepository.getMovies();
     }
 }

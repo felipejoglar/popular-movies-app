@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.movies;
+package com.fjoglar.popularmoviesapp.data.source.remote;
 
-import com.fjoglar.popularmoviesapp.base.BasePresenter;
-import com.fjoglar.popularmoviesapp.base.BaseView;
-import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 
-import java.util.List;
+import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public interface MoviesContract {
+public interface TheMovieDbApi {
 
-    interface View extends BaseView<Presenter> {
-
-        void showMovies(List<Movie> movies);
-
-        void showLoading();
-
-        void hideLoading();
-    }
-
-    interface Presenter extends BasePresenter {
-
-        void getMovies();
-    }
+    @GET("movie/popular")
+    Observable<MoviesResponse> getMovies(@Query("api_key") String apiKey);
 }

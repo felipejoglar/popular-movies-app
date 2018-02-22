@@ -17,11 +17,16 @@
 package com.fjoglar.popularmoviesapp.movies;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.fjoglar.popularmoviesapp.base.BaseObserver;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 import com.fjoglar.popularmoviesapp.movies.domain.GetMovies;
 import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
+
+import java.util.List;
 
 public class MoviesPresenter implements MoviesContract.Presenter {
 
@@ -66,11 +71,11 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mGetMovies.execute(new MoviesListObserver());
     }
 
-    private final class MoviesListObserver extends BaseObserver<String[]> {
+    private final class MoviesListObserver extends BaseObserver<List<Movie>> {
 
         @Override
-        public void onNext(String[] moviesList) {
-            mMoviesView.showMovies(moviesList);
+        public void onNext(List<Movie> movies) {
+            mMoviesView.showMovies(movies);
         }
 
         @Override

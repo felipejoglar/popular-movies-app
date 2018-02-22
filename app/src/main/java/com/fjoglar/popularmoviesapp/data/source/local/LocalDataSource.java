@@ -18,7 +18,11 @@ package com.fjoglar.popularmoviesapp.data.source.local;
 
 import android.support.annotation.Nullable;
 
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -55,15 +59,8 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String[]> getMovies() {
-
-        final String POSTER_URL = "https://image.tmdb.org/t/p/w500/q0R4crx2SehcEEQEkYObktdeFy.jpg";
-        String[] fakeMovies = new String[10];
-
-        for (int i = 0; i < 10; i++) {
-            fakeMovies[i] = POSTER_URL;
-        }
-
-        return Observable.just(fakeMovies);
+    public Observable<List<Movie>> getMovies() {
+        // Not used yet
+        return null;
     }
 }

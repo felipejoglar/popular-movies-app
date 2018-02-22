@@ -16,9 +16,13 @@
 
 package com.fjoglar.popularmoviesapp.data.source;
 
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 
 public interface DataSource {
 
-    Observable<String[]> getMovies();
+    Observable<List<Movie>> getMovies();
 }

@@ -25,10 +25,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.fjoglar.popularmoviesapp.R;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.source.Repository;
 import com.fjoglar.popularmoviesapp.data.source.local.LocalDataSource;
 import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
 import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
+
+import java.util.List;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View {
 
@@ -90,7 +93,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    public void showMovies(String[] movies) {
+    public void showMovies(List<Movie> movies) {
         mMoviesAdapter.setMoviesData(movies);
     }
 

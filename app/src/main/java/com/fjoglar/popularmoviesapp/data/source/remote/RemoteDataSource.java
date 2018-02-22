@@ -18,25 +18,40 @@ package com.fjoglar.popularmoviesapp.data.source.remote;
 
 import android.support.annotation.Nullable;
 
+import com.fjoglar.popularmoviesapp.BuildConfig;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Concrete implementation of a remote data source that adds a latency simulating network.
  */
 public class RemoteDataSource implements DataSource {
 
-    private static final int SERVICE_LATENCY_IN_MILLIS = 5000;
+    private static final String THE_MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/";
 
     @Nullable
     private static RemoteDataSource INSTANCE = null;
+    private TheMovieDbApi mTheMovieDbApi;
 
     // Prevent direct instantiation.
     private RemoteDataSource() {
-
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(THE_MOVIE_DB_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        mTheMovieDbApi = retrofit.create(TheMovieDbApi.class);
     }
 
     /**
@@ -59,16 +74,8 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String[]> getMovies() {
-
-        final String POSTER_URL = "https://image.tmdb.org/t/p/w500/q0R4crx2SehcEEQEkYObktdeFy.jpg";
-        String[] fakeMovies = new String[10];
-
-        for (int i = 0; i < 10; i++) {
-            fakeMovies[i] = POSTER_URL;
-        }
-
-        return Observable.just(fakeMovies)
-                         .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS);
+    public Observable<List<Movie>> getMovies() {
+        return mTheMovieDbApi.getMovies(BuildConfig.TMDB_API_KEY)
+                .map(MoviesResponse::getMovies);
     }
 }
