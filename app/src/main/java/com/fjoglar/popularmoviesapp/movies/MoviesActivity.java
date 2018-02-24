@@ -39,8 +39,6 @@ import java.util.List;
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
         MoviesAdapter.MovieClickListener {
 
-    private static final int COLUMN_NUMBER = 2;
-
     private Toast mToast;
 
     private MoviesContract.Presenter mMoviesPresenter;
@@ -130,7 +128,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     private void setUpRecyclerView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,
+                this.getResources().getInteger(R.integer.movies_activity_column_number));
         mMoviesAdapter = new MoviesAdapter(this, this);
 
         mRvMovies.setLayoutManager(layoutManager);
