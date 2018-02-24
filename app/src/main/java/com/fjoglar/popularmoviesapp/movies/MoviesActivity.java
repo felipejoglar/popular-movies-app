@@ -43,7 +43,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     private Toast mToast;
 
-    private MoviesContract.Presenter mMainPresenter;
+    private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mMoviesAdapter;
 
     private RecyclerView mRvMovies;
@@ -57,7 +57,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRvMovies = findViewById(R.id.rv_movies);
         mProgressLoading = findViewById(R.id.progress_loading);
 
-        mMainPresenter = new MoviesPresenter(
+        mMoviesPresenter = new MoviesPresenter(
                 Repository.getInstance(RemoteDataSource.getInstance(),
                         LocalDataSource.getInstance()),
                 this,
@@ -74,13 +74,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     protected void onResume() {
         super.onResume();
-        mMainPresenter.subscribe();
+        mMoviesPresenter.subscribe();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mMainPresenter.unsubscribe();
+        mMoviesPresenter.unsubscribe();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     @Override
     public void setPresenter(@NonNull MoviesContract.Presenter presenter) {
-        mMainPresenter = presenter;
+        mMoviesPresenter = presenter;
     }
 
     @Override

@@ -42,10 +42,10 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     private final GetMovies mGetMovies;
 
     public MoviesPresenter(@NonNull DataSource repository,
-                           @NonNull MoviesContract.View mainView,
+                           @NonNull MoviesContract.View moviesView,
                            @NonNull BaseSchedulerProvider schedulerProvider) {
         mRepository = repository;
-        mMoviesView = mainView;
+        mMoviesView = moviesView;
         mSchedulerProvider = schedulerProvider;
 
         mMoviesView.setPresenter(this);
