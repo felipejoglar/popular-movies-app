@@ -14,56 +14,47 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.movies;
+package com.fjoglar.popularmoviesapp.moviedetail;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.source.Repository;
 import com.fjoglar.popularmoviesapp.data.source.local.LocalDataSource;
 import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
-import com.fjoglar.popularmoviesapp.moviedetail.MovieDetailActivity;
+import com.fjoglar.popularmoviesapp.movies.MoviesAdapter;
+import com.fjoglar.popularmoviesapp.movies.MoviesContract;
+import com.fjoglar.popularmoviesapp.movies.MoviesPresenter;
 import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
 import java.util.List;
 
-public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
-        MoviesAdapter.MovieClickListener {
+public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View{
 
-    private static final int COLUMN_NUMBER = 2;
+    public static final String INTENT_EXTRA_MOVIE = "movie";
 
-    private Toast mToast;
+    private MovieDetailContract.Presenter mMovieDetailPresenter;
 
-    private MoviesContract.Presenter mMainPresenter;
-    private MoviesAdapter mMoviesAdapter;
-
-    private RecyclerView mRvMovies;
     private ProgressBar mProgressLoading;
+    private TextView mTextMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies);
+        setContentView(R.layout.activity_movie_detail);
 
-        mRvMovies = findViewById(R.id.rv_movies);
         mProgressLoading = findViewById(R.id.progress_loading);
+        mTextMovie = findViewById(R.id.text_movie);
 
-        mMainPresenter = new MoviesPresenter(
-                Repository.getInstance(RemoteDataSource.getInstance(),
-                        LocalDataSource.getInstance()),
-                this,
-                SchedulerProvider.getInstance());
-
-        setUpRecyclerView();
+        mMovieDetailPresenter = new MovieDetailPresenter(this,
+                getIntent().getParcelableExtra(INTENT_EXTRA_MOVIE));
     }
 
     @Override
@@ -74,13 +65,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     protected void onResume() {
         super.onResume();
-        mMainPresenter.subscribe();
+        mMovieDetailPresenter.subscribe();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mMainPresenter.unsubscribe();
+        mMovieDetailPresenter.unsubscribe();
     }
 
     @Override
@@ -94,13 +85,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    public void setPresenter(@NonNull MoviesContract.Presenter presenter) {
-        mMainPresenter = presenter;
+    public void setPresenter(@NonNull MovieDetailContract.Presenter presenter) {
+        mMovieDetailPresenter = presenter;
     }
 
     @Override
-    public void showMovies(List<Movie> movies) {
-        mMoviesAdapter.setMoviesData(movies);
+    public void showMovie(Movie movie) {
+        mTextMovie.setText(movie.getTitle());
     }
 
     @Override
@@ -111,30 +102,5 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     public void hideLoading() {
         mProgressLoading.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onMovieClick(Movie movie) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-
-        mToast = Toast.makeText(this,
-                movie.getTitle(),
-                Toast.LENGTH_LONG);
-        mToast.show();
-
-        Intent DetailActivityIntent = new Intent(this, MovieDetailActivity.class);
-        DetailActivityIntent.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE, movie);
-        startActivity(DetailActivityIntent);
-    }
-
-    private void setUpRecyclerView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(this, COLUMN_NUMBER);
-        mMoviesAdapter = new MoviesAdapter(this, this);
-
-        mRvMovies.setLayoutManager(layoutManager);
-        mRvMovies.setHasFixedSize(true);
-        mRvMovies.setAdapter(mMoviesAdapter);
     }
 }

@@ -84,11 +84,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            mOnClickListener.onMovieClick(mMovies.get(getAdapterPosition()).getTitle());
+            mOnClickListener.onMovieClick(mMovies.get(getAdapterPosition()));
         }
     }
 
     public interface MovieClickListener {
-        void onMovieClick(String movieTitle);
+        void onMovieClick(Movie movie);
     }
 }
