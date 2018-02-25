@@ -35,6 +35,8 @@ public interface MoviesContract {
 
     interface Presenter extends BasePresenter {
 
-        void getMovies();
+        void getPopularMovies();
+
+        void getTopRatedMovies();
     }
 }

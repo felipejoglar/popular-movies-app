@@ -25,5 +25,8 @@ import retrofit2.http.Query;
 public interface TheMovieDbApi {
 
     @GET("movie/popular")
-    Observable<MoviesResponse> getMovies(@Query("api_key") String apiKey);
+    Observable<MoviesResponse> getPopularMovies(@Query("api_key") String apiKey);
+
+    @GET("movie/top_rated")
+    Observable<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
 }

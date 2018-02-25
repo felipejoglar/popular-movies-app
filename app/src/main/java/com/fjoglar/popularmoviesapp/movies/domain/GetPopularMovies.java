@@ -18,7 +18,6 @@ package com.fjoglar.popularmoviesapp.movies.domain;
 
 import com.fjoglar.popularmoviesapp.UseCase;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
-import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
 import java.util.List;
@@ -30,19 +29,19 @@ import io.reactivex.Scheduler;
  * This class is an implementation of {@link UseCase} that represents a use case for
  * retrieving the welcome message.
  */
-public class GetMovies extends UseCase<List<Movie>> {
+public class GetPopularMovies extends UseCase<List<Movie>> {
 
     private final DataSource mRepository;
 
-    public GetMovies(DataSource repository,
-                     Scheduler threadExecutor,
-                     Scheduler postExecutionThread) {
+    public GetPopularMovies(DataSource repository,
+                            Scheduler threadExecutor,
+                            Scheduler postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mRepository = repository;
     }
 
     @Override
     public Observable<List<Movie>> buildUseCaseObservable() {
-        return mRepository.getMovies();
+        return mRepository.getPopularMovies();
     }
 }

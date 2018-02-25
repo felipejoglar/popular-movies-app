@@ -17,13 +17,12 @@
 package com.fjoglar.popularmoviesapp.movies;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.fjoglar.popularmoviesapp.base.BaseObserver;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
-import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
-import com.fjoglar.popularmoviesapp.movies.domain.GetMovies;
+import com.fjoglar.popularmoviesapp.movies.domain.GetPopularMovies;
+import com.fjoglar.popularmoviesapp.movies.domain.GetTopRatedMovies;
 import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
 
 import java.util.List;
@@ -39,7 +38,8 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @NonNull
     private final BaseSchedulerProvider mSchedulerProvider;
 
-    private final GetMovies mGetMovies;
+    private final GetPopularMovies mGetPopularMovies;
+    private final GetTopRatedMovies mGetTopRatedMovies;
 
     public MoviesPresenter(@NonNull DataSource repository,
                            @NonNull MoviesContract.View moviesView,
@@ -50,25 +50,35 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         mMoviesView.setPresenter(this);
 
-        mGetMovies = new GetMovies(mRepository,
+        mGetPopularMovies = new GetPopularMovies(mRepository,
+                mSchedulerProvider.computation(),
+                mSchedulerProvider.ui());
+        mGetTopRatedMovies = new GetTopRatedMovies(mRepository,
                 mSchedulerProvider.computation(),
                 mSchedulerProvider.ui());
     }
 
     @Override
     public void subscribe() {
-        mMoviesView.showLoading();
-        getMovies();
+        getPopularMovies();
     }
 
     @Override
     public void unsubscribe() {
-        mGetMovies.dispose();
+        mGetPopularMovies.dispose();
+        mGetTopRatedMovies.dispose();
     }
 
     @Override
-    public void getMovies() {
-        mGetMovies.execute(new MoviesListObserver());
+    public void getPopularMovies() {
+        mMoviesView.showLoading();
+        mGetPopularMovies.execute(new MoviesListObserver());
+    }
+
+    @Override
+    public void getTopRatedMovies() {
+        mMoviesView.showLoading();
+        mGetTopRatedMovies.execute(new MoviesListObserver());
     }
 
     private final class MoviesListObserver extends BaseObserver<List<Movie>> {

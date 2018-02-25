@@ -24,5 +24,7 @@ import io.reactivex.Observable;
 
 public interface DataSource {
 
-    Observable<List<Movie>> getMovies();
+    Observable<List<Movie>> getPopularMovies();
+
+    Observable<List<Movie>> getTopRatedMovies();
 }

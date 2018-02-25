@@ -59,7 +59,13 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public Observable<List<Movie>> getMovies() {
+    public Observable<List<Movie>> getPopularMovies() {
+        // Not used yet
+        return null;
+    }
+
+    @Override
+    public Observable<List<Movie>> getTopRatedMovies() {
         // Not used yet
         return null;
     }

@@ -104,8 +104,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.most_popular:
+                mMoviesPresenter.getPopularMovies();
                 return true;
             case R.id.top_rated:
+                mMoviesPresenter.getTopRatedMovies();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
