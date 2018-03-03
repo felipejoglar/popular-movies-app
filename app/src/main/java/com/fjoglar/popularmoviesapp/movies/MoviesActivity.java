@@ -23,7 +23,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -33,6 +32,7 @@ import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.source.Repository;
 import com.fjoglar.popularmoviesapp.data.source.local.LocalDataSource;
+import com.fjoglar.popularmoviesapp.data.source.preferences.AppPreferences;
 import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
 import com.fjoglar.popularmoviesapp.moviedetail.MovieDetailActivity;
 import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
@@ -58,12 +58,6 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRvMovies = findViewById(R.id.rv_movies);
         mProgressLoading = findViewById(R.id.progress_loading);
 
-        mMoviesPresenter = new MoviesPresenter(
-                Repository.getInstance(RemoteDataSource.getInstance(),
-                        LocalDataSource.getInstance()),
-                this,
-                SchedulerProvider.getInstance());
-
         setUpRecyclerView();
     }
 
@@ -75,6 +69,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     protected void onResume() {
         super.onResume();
+        initPresenter();
         mMoviesPresenter.subscribe();
     }
 
@@ -158,5 +153,14 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRvMovies.setLayoutManager(layoutManager);
         mRvMovies.setHasFixedSize(true);
         mRvMovies.setAdapter(mMoviesAdapter);
+    }
+
+    private void initPresenter() {
+        mMoviesPresenter = new MoviesPresenter(
+                Repository.getInstance(RemoteDataSource.getInstance(),
+                        LocalDataSource.getInstance()),
+                AppPreferences.getInstance(getApplicationContext()),
+                this,
+                SchedulerProvider.getInstance());
     }
 }

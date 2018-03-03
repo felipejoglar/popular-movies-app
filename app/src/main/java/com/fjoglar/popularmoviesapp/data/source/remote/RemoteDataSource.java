@@ -24,11 +24,8 @@ import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
