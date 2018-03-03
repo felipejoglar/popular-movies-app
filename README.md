@@ -28,6 +28,7 @@ git update-index --assume-unchanged gradle.properties
 * [RxJava2](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0)
 * [Retrofit](https://github.com/square/retrofit)
 * [Gson](https://github.com/google/gson)
+* [Picasso](https://github.com/square/picasso)
 
 
 ## Requirements
