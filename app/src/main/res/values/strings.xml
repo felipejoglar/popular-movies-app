@@ -22,4 +22,7 @@ limitations under the License.
     <!-- MOVIES MENU -->
     <string name="most_popular">Most Popular</string>
     <string name="top_rated">Top Rated</string>
+
+    <!-- MOVIE DETAIL -->
+    <string name="synopsis_title">SYNOPSIS</string>
 </resources>
