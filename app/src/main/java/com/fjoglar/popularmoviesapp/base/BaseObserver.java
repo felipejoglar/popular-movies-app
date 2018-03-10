@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp;
+package com.fjoglar.popularmoviesapp.base;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -23,7 +23,7 @@ import io.reactivex.observers.DisposableObserver;
  * error handling.
  */
 
-public class DefaultObserver<T> extends DisposableObserver<T> {
+public class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {

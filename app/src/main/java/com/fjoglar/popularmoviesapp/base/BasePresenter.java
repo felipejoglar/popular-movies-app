@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.data.source;
+package com.fjoglar.popularmoviesapp.base;
 
-import com.fjoglar.popularmoviesapp.data.model.Movie;
+public interface BasePresenter {
 
-import java.util.List;
+    void subscribe();
 
-import io.reactivex.Observable;
+    void unsubscribe();
 
-public interface DataSource {
-
-    Observable<List<Movie>> getPopularMovies();
-
-    Observable<List<Movie>> getTopRatedMovies();
 }

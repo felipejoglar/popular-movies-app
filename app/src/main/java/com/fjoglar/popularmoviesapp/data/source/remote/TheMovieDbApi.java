@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.data.source;
+package com.fjoglar.popularmoviesapp.data.source.remote;
 
-import com.fjoglar.popularmoviesapp.data.model.Movie;
-
-import java.util.List;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 
 import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public interface DataSource {
+public interface TheMovieDbApi {
 
-    Observable<List<Movie>> getPopularMovies();
+    @GET("movie/popular")
+    Observable<MoviesResponse> getPopularMovies(@Query("api_key") String apiKey);
 
-    Observable<List<Movie>> getTopRatedMovies();
+    @GET("movie/top_rated")
+    Observable<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
 }

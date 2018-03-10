@@ -5,18 +5,38 @@
 [![Platform Android](https://img.shields.io/badge/platform-Android-blue.svg)](https://www.android.com)
 
 
+## Api Key use
+
+First you need to get an API key from [The Movie Database](https://www.themoviedb.org/) website.
+
+Then inside the `gradle.properties` file substitute `your_tmdb_api_key_here` with your actual API key and add this file to your .gitignore to avoid pushing your key to your public repository.
+
+```
+# The Movie Database Api Key
+tmdbApiKey = "your_tmdb_api_key_here"
+```
+Or just run the following git command to tell git not to track the file:
+
+```
+git update-index --assume-unchanged gradle.properties
+```
+
 ## Languages, libraries and tools used
 
 * [Java](https://docs.oracle.com/javase/8/)
 * Android Support Libraries
 * [RxJava2](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0)
+* [Retrofit](https://github.com/square/retrofit)
+* [Gson](https://github.com/google/gson)
+* [Picasso](https://github.com/square/picasso)
+* [Butterknife](https://github.com/JakeWharton/butterknife)
 
 
 ## Requirements
 
 * JDK 1.8
 * [Android SDK](https://developer.android.com/studio/index.html)
-* Android O ([API 26](https://developer.android.com/preview/api-overview.html))
+* Android O ([API 27](https://developer.android.com/preview/api-overview.html))
 * Latest Android SDK Tools and build tools.
 
 

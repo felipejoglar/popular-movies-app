@@ -18,7 +18,11 @@ package com.fjoglar.popularmoviesapp.data.source.local;
 
 import android.support.annotation.Nullable;
 
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -55,10 +59,14 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String> getWelcomeMessage() {
+    public Observable<List<Movie>> getPopularMovies() {
+        // Not used yet
+        return null;
+    }
 
-        final String WELCOME_MESSAGE = "Hello World!";
-
-        return Observable.just(WELCOME_MESSAGE);
+    @Override
+    public Observable<List<Movie>> getTopRatedMovies() {
+        // Not used yet
+        return null;
     }
 }

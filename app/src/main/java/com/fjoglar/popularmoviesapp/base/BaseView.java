@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp;
+package com.fjoglar.popularmoviesapp.base;
+
+import com.fjoglar.popularmoviesapp.base.BasePresenter;
 
 public interface BaseView<T extends BasePresenter> {
 

@@ -19,7 +19,9 @@ package com.fjoglar.popularmoviesapp.data.source;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Random;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -65,14 +67,22 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public Observable<String> getWelcomeMessage() {
-
-        final float REMOTE_ACCESS_RATE = 0.30f;
-
-        if (new Random().nextFloat() > REMOTE_ACCESS_RATE) {
-            return mLocalDataSource.getWelcomeMessage();
+    public Observable<List<Movie>> getPopularMovies() {
+        if (false) {
+            // Not used yet
+            return mLocalDataSource.getPopularMovies();
         } else {
-            return mRemoteDataSource.getWelcomeMessage();
+            return mRemoteDataSource.getPopularMovies();
+        }
+    }
+
+    @Override
+    public Observable<List<Movie>> getTopRatedMovies() {
+        if (false) {
+            // Not used yet
+            return mLocalDataSource.getTopRatedMovies();
+        } else {
+            return mRemoteDataSource.getTopRatedMovies();
         }
     }
 }

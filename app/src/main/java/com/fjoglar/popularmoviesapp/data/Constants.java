@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp.main;
+package com.fjoglar.popularmoviesapp.data;
 
-import com.fjoglar.popularmoviesapp.BasePresenter;
-import com.fjoglar.popularmoviesapp.BaseView;
+public final class Constants {
 
-public interface MainContract {
+    public static final String MOVIES_POPULAR = "movies_popular";
+    public static final String MOVIES_TOP_RATED = "movies_top_rated";
 
-    interface View extends BaseView<Presenter> {
-
-        void showWelcomeMessage(String message);
-
-        void showLoading();
-
-        void hideLoading();
+    private Constants() {
+        // This utility class is not publicly instantiable
     }
-
-    interface Presenter extends BasePresenter {
-
-        void getWelcomeMessage();
-
-    }
-
 }

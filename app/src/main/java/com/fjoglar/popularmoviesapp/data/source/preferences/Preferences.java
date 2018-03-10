@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.fjoglar.popularmoviesapp;
+package com.fjoglar.popularmoviesapp.data.source.preferences;
 
-public interface BasePresenter {
+public interface Preferences {
 
-    void subscribe();
+    String getCurrentDisplayedMovies();
 
-    void unsubscribe();
-
+    void setCurrentDisplayedMovies(String currentDisplayedMovies);
 }

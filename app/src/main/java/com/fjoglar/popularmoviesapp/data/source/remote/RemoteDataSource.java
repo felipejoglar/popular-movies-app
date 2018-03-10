@@ -18,25 +18,37 @@ package com.fjoglar.popularmoviesapp.data.source.remote;
 
 import android.support.annotation.Nullable;
 
+import com.fjoglar.popularmoviesapp.BuildConfig;
+import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Concrete implementation of a remote data source that adds a latency simulating network.
  */
 public class RemoteDataSource implements DataSource {
 
-    private static final int SERVICE_LATENCY_IN_MILLIS = 5000;
+    private static final String THE_MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/";
 
     @Nullable
     private static RemoteDataSource INSTANCE = null;
+    private TheMovieDbApi mTheMovieDbApi;
 
     // Prevent direct instantiation.
     private RemoteDataSource() {
-
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(THE_MOVIE_DB_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        mTheMovieDbApi = retrofit.create(TheMovieDbApi.class);
     }
 
     /**
@@ -59,11 +71,14 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Observable<String> getWelcomeMessage() {
+    public Observable<List<Movie>> getPopularMovies() {
+        return mTheMovieDbApi.getPopularMovies(BuildConfig.TMDB_API_KEY)
+                .map(MoviesResponse::getMovies);
+    }
 
-        final String WELCOME_MESSAGE = "Hello World!";
-
-        return Observable.just(WELCOME_MESSAGE)
-                         .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS);
+    @Override
+    public Observable<List<Movie>> getTopRatedMovies() {
+        return mTheMovieDbApi.getTopRatedMovies(BuildConfig.TMDB_API_KEY)
+                .map(MoviesResponse::getMovies);
     }
 }
