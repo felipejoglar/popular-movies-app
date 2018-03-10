@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
@@ -41,8 +40,6 @@ import java.util.List;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
         MoviesAdapter.MovieClickListener {
-
-    private Toast mToast;
 
     private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mMoviesAdapter;
@@ -131,15 +128,6 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     @Override
     public void onMovieClick(Movie movie) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-
-        mToast = Toast.makeText(this,
-                movie.getTitle(),
-                Toast.LENGTH_LONG);
-        mToast.show();
-
         Intent DetailActivityIntent = new Intent(this, MovieDetailActivity.class);
         DetailActivityIntent.putExtra(MovieDetailActivity.INTENT_EXTRA_MOVIE, movie);
         startActivity(DetailActivityIntent);
