@@ -29,6 +29,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
     private static final String TAG = MoviesAdapter.class.getSimpleName();
@@ -73,11 +76,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView mImgPoster;
+        @BindView(R.id.img_poster) ImageView mImgPoster;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImgPoster = itemView.findViewById(R.id.img_poster);
+
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
         }

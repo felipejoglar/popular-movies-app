@@ -29,6 +29,7 @@ git update-index --assume-unchanged gradle.properties
 * [Retrofit](https://github.com/square/retrofit)
 * [Gson](https://github.com/google/gson)
 * [Picasso](https://github.com/square/picasso)
+* [Butterknife](https://github.com/JakeWharton/butterknife)
 
 
 ## Requirements
