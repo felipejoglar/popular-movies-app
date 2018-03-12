@@ -19,6 +19,8 @@ package com.fjoglar.popularmoviesapp.moviedetail;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,16 +29,28 @@ import android.widget.TextView;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
+import com.fjoglar.popularmoviesapp.data.source.Repository;
+import com.fjoglar.popularmoviesapp.data.source.local.LocalDataSource;
+import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
+import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View {
+public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View,
+        VideosAdapter.VideoClickListener {
 
     public static final String INTENT_EXTRA_MOVIE = "movie";
 
     private MovieDetailContract.Presenter mMovieDetailPresenter;
+
+    private ReviewsAdapter mReviewsAdapter;
+    private VideosAdapter mVideosAdapter;
 
     @BindView(R.id.progress_loading)
     ProgressBar mProgressLoading;
@@ -54,8 +68,14 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     TextView mTextTotalVotes;
     @BindView(R.id.rating_score)
     RatingBar mRatingScore;
+    @BindView(R.id.rv_videos)
+    RecyclerView mRvVideos;
     @BindView(R.id.text_synopsis)
     TextView mTextSynopsis;
+    @BindView(R.id.text_reviews_title)
+    TextView mTextReviewsTitle;
+    @BindView(R.id.rv_reviews)
+    RecyclerView mRvReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +83,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         setContentView(R.layout.activity_movie_detail);
 
         ButterKnife.bind(this);
-
-        mMovieDetailPresenter = new MovieDetailPresenter(this,
-                getIntent().getParcelableExtra(INTENT_EXTRA_MOVIE));
+        setUpReviews();
+        setUpVideos();
     }
 
     @Override
@@ -76,6 +95,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     protected void onResume() {
         super.onResume();
+        initPresenter();
         mMovieDetailPresenter.subscribe();
     }
 
@@ -119,6 +139,28 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
+    public void showReviews(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            mTextReviewsTitle.setVisibility(View.GONE);
+            mRvReviews.setVisibility(View.GONE);
+        } else {
+            mTextReviewsTitle.setVisibility(View.VISIBLE);
+            mRvReviews.setVisibility(View.VISIBLE);
+            mReviewsAdapter.setReviewsData(reviews);
+        }
+    }
+
+    @Override
+    public void showVideos(List<Video> videos) {
+        if (videos.isEmpty()) {
+            mRvVideos.setVisibility(View.GONE);
+        } else {
+            mRvVideos.setVisibility(View.VISIBLE);
+            mVideosAdapter.setVideosData(videos);
+        }
+    }
+
+    @Override
     public void showLoading() {
         mProgressLoading.setVisibility(View.VISIBLE);
     }
@@ -126,5 +168,34 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     public void hideLoading() {
         mProgressLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onVideoClick(Video video) {
+
+    }
+
+    private void setUpReviews() {
+        mReviewsAdapter = new ReviewsAdapter();
+
+        mRvReviews.setHasFixedSize(true);
+        mRvReviews.setLayoutManager(new LinearLayoutManager(this));
+        mRvReviews.setAdapter(mReviewsAdapter);
+    }
+
+    private void setUpVideos() {
+        mVideosAdapter = new VideosAdapter(this);
+
+        mRvVideos.setHasFixedSize(true);
+        mRvVideos.setLayoutManager(new LinearLayoutManager(this));
+        mRvVideos.setAdapter(mVideosAdapter);
+    }
+
+    private void initPresenter() {
+        mMovieDetailPresenter = new MovieDetailPresenter(this,
+                Repository.getInstance(RemoteDataSource.getInstance(),
+                        LocalDataSource.getInstance()),
+                SchedulerProvider.getInstance(),
+                getIntent().getParcelableExtra(INTENT_EXTRA_MOVIE));
     }
 }

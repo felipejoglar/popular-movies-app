@@ -18,36 +18,118 @@ package com.fjoglar.popularmoviesapp.moviedetail;
 
 import android.support.annotation.NonNull;
 
+import com.fjoglar.popularmoviesapp.base.BaseObserver;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
+import com.fjoglar.popularmoviesapp.data.source.DataSource;
+import com.fjoglar.popularmoviesapp.moviedetail.domain.GetMovieReviews;
+import com.fjoglar.popularmoviesapp.moviedetail.domain.GetMovieVideos;
+import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
 
+import java.util.List;
+
+/**
+ * {@link MovieDetailContract.Presenter} that controls communication between views and models of
+ * the presentation layer.
+ */
 public class MovieDetailPresenter implements MovieDetailContract.Presenter {
 
     @NonNull
-    private final MovieDetailContract.View mMovieDetailView;
+    private MovieDetailContract.View mMovieDetailView;
+
+    @NonNull
+    private final DataSource mRepository;
+
+    @NonNull
+    private final BaseSchedulerProvider mSchedulerProvider;
 
     private final Movie mMovie;
 
-    public MovieDetailPresenter(@NonNull MovieDetailContract.View movieDetailView, Movie movie) {
+    private final GetMovieReviews mGetMovieReviews;
+    private final GetMovieVideos mGetMovieVideos;
+
+    public MovieDetailPresenter(@NonNull MovieDetailContract.View movieDetailView,
+                                @NonNull DataSource repository,
+                                @NonNull BaseSchedulerProvider schedulerProvider,
+                                @NonNull Movie movie) {
         mMovieDetailView = movieDetailView;
+        mRepository = repository;
+        mSchedulerProvider = schedulerProvider;
         mMovie = movie;
 
         mMovieDetailView.setPresenter(this);
+
+        mGetMovieReviews = new GetMovieReviews(mRepository,
+                mSchedulerProvider.io(),
+                mSchedulerProvider.ui());
+        mGetMovieVideos = new GetMovieVideos(mRepository,
+                mSchedulerProvider.io(),
+                mSchedulerProvider.ui());
     }
 
     @Override
     public void subscribe() {
         mMovieDetailView.showLoading();
         getMovie();
-        mMovieDetailView.hideLoading();
+        getMovieReviews();
+        getMovieVideos();
     }
 
     @Override
     public void unsubscribe() {
-
+        mGetMovieReviews.dispose();
+        mGetMovieVideos.dispose();
     }
 
     @Override
     public void getMovie() {
         mMovieDetailView.showMovie(mMovie);
+    }
+
+    private void getMovieReviews() {
+        mGetMovieReviews.execute(new MovieReviewsObserver(),
+                GetMovieReviews.Params.forMovie(mMovie.getId()));
+    }
+
+    private void getMovieVideos() {
+        mGetMovieVideos.execute(new MovieVideosObserver(),
+                GetMovieVideos.Params.forMovie(mMovie.getId()));
+    }
+
+    private final class MovieReviewsObserver extends BaseObserver<List<Review>> {
+
+        @Override
+        public void onNext(List<Review> reviews) {
+            mMovieDetailView.showReviews(reviews);
+        }
+
+        @Override
+        public void onComplete() {
+            mMovieDetailView.hideLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+    }
+
+    private final class MovieVideosObserver extends BaseObserver<List<Video>> {
+
+        @Override
+        public void onNext(List<Video> videos) {
+            mMovieDetailView.showVideos(videos);
+        }
+
+        @Override
+        public void onComplete() {
+            mMovieDetailView.hideLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
     }
 }

@@ -19,6 +19,8 @@ package com.fjoglar.popularmoviesapp.moviedetail;
 import com.fjoglar.popularmoviesapp.base.BasePresenter;
 import com.fjoglar.popularmoviesapp.base.BaseView;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
 
 import java.util.List;
 
@@ -27,6 +29,10 @@ public interface MovieDetailContract {
     interface View extends BaseView<Presenter> {
 
         void showMovie(Movie movie);
+
+        void showReviews(List<Review> reviews);
+
+        void showVideos(List<Video> videos);
 
         void showLoading();
 

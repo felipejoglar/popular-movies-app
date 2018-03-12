@@ -10,7 +10,7 @@ public class VideosResponse {
     @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("videos")
+    @SerializedName("results")
     @Expose
     private List<Video> videos = null;
 
