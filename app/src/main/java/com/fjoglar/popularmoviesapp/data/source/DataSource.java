@@ -17,6 +17,8 @@
 package com.fjoglar.popularmoviesapp.data.source;
 
 import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
 
 import java.util.List;
 
@@ -27,4 +29,8 @@ public interface DataSource {
     Observable<List<Movie>> getPopularMovies();
 
     Observable<List<Movie>> getTopRatedMovies();
+
+    Observable<List<Review>> getMovieReviews(int movieId);
+
+    Observable<List<Video>> getMovieVideos(int movieId);
 }

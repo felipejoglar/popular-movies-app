@@ -21,6 +21,10 @@ import android.support.annotation.Nullable;
 import com.fjoglar.popularmoviesapp.BuildConfig;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.ReviewsResponse;
+import com.fjoglar.popularmoviesapp.data.model.Video;
+import com.fjoglar.popularmoviesapp.data.model.VideosResponse;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
 import java.util.List;
@@ -80,5 +84,17 @@ public class RemoteDataSource implements DataSource {
     public Observable<List<Movie>> getTopRatedMovies() {
         return mTheMovieDbApi.getTopRatedMovies(BuildConfig.TMDB_API_KEY)
                 .map(MoviesResponse::getMovies);
+    }
+
+    @Override
+    public Observable<List<Review>> getMovieReviews(int movieId) {
+        return mTheMovieDbApi.getMovieReviews(movieId, BuildConfig.TMDB_API_KEY)
+                .map(ReviewsResponse::getReviews);
+    }
+
+    @Override
+    public Observable<List<Video>> getMovieVideos(int movieId) {
+        return mTheMovieDbApi.getMovieVideos(movieId, BuildConfig.TMDB_API_KEY)
+                .map(VideosResponse::getVideos);
     }
 }

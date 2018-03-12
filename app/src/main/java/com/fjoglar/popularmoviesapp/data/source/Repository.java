@@ -20,6 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.fjoglar.popularmoviesapp.data.model.Movie;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
 
 import java.util.List;
 
@@ -83,6 +85,26 @@ public class Repository implements DataSource {
             return mLocalDataSource.getTopRatedMovies();
         } else {
             return mRemoteDataSource.getTopRatedMovies();
+        }
+    }
+
+    @Override
+    public Observable<List<Review>> getMovieReviews(int movieId) {
+        if (false) {
+            // Not used yet
+            return mLocalDataSource.getMovieReviews(movieId);
+        } else {
+            return mRemoteDataSource.getMovieReviews(movieId);
+        }
+    }
+
+    @Override
+    public Observable<List<Video>> getMovieVideos(int movieId) {
+        if (false) {
+            // Not used yet
+            return mLocalDataSource.getMovieVideos(movieId);
+        } else {
+            return mRemoteDataSource.getMovieVideos(movieId);
         }
     }
 }

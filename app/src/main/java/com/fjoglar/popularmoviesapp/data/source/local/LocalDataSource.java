@@ -19,7 +19,8 @@ package com.fjoglar.popularmoviesapp.data.source.local;
 import android.support.annotation.Nullable;
 
 import com.fjoglar.popularmoviesapp.data.model.Movie;
-import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
+import com.fjoglar.popularmoviesapp.data.model.Review;
+import com.fjoglar.popularmoviesapp.data.model.Video;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 
 import java.util.List;
@@ -66,6 +67,18 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public Observable<List<Movie>> getTopRatedMovies() {
+        // Not used yet
+        return null;
+    }
+
+    @Override
+    public Observable<List<Review>> getMovieReviews(int movieId) {
+        // Not used yet
+        return null;
+    }
+
+    @Override
+    public Observable<List<Video>> getMovieVideos(int movieId) {
         // Not used yet
         return null;
     }

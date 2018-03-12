@@ -25,4 +25,5 @@ limitations under the License.
 
     <!-- MOVIE DETAIL -->
     <string name="synopsis_title">SYNOPSIS</string>
+    <string name="reviews_title">REVIEWS</string>
 </resources>

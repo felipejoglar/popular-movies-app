@@ -17,9 +17,12 @@
 package com.fjoglar.popularmoviesapp.data.source.remote;
 
 import com.fjoglar.popularmoviesapp.data.model.MoviesResponse;
+import com.fjoglar.popularmoviesapp.data.model.ReviewsResponse;
+import com.fjoglar.popularmoviesapp.data.model.VideosResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface TheMovieDbApi {
@@ -29,4 +32,12 @@ public interface TheMovieDbApi {
 
     @GET("movie/top_rated")
     Observable<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+
+    @GET("movie/{movie_id}/reviews")
+    Observable<ReviewsResponse> getMovieReviews(@Path("movie_id") int movieId,
+                                                @Query("api_key") String apiKey);
+
+    @GET("movie/{movie_id}/videos")
+    Observable<VideosResponse> getMovieVideos(@Path("movie_id") int movieId,
+                                              @Query("api_key") String apiKey);
 }
