@@ -117,6 +117,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onError(Throwable e) {
+
         }
     }
 

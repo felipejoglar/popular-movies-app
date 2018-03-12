@@ -38,22 +38,26 @@ import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
         MoviesAdapter.MovieClickListener {
 
     private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mMoviesAdapter;
 
-    private RecyclerView mRvMovies;
-    private ProgressBar mProgressLoading;
+    @BindView(R.id.rv_movies)
+    RecyclerView mRvMovies;
+    @BindView(R.id.progress_loading)
+    ProgressBar mProgressLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
 
-        mRvMovies = findViewById(R.id.rv_movies);
-        mProgressLoading = findViewById(R.id.progress_loading);
+        ButterKnife.bind(this);
 
         setUpRecyclerView();
     }
