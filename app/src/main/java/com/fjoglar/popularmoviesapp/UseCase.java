@@ -27,7 +27,7 @@ import io.reactivex.observers.DisposableObserver;
  *
  * @param <T> the request type
  */
-public abstract class UseCase<T> {
+public abstract class UseCase<T, Params> {
 
     private final Scheduler mThreadExecutor;
     private final Scheduler mPostExecutionThread;
@@ -42,17 +42,18 @@ public abstract class UseCase<T> {
     /**
      * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
      */
-    public abstract Observable<T> buildUseCaseObservable();
+    public abstract Observable<T> buildUseCaseObservable(Params params);
 
     /**
      * Executes the current use case.
      *
      * @param observer {@link DisposableObserver} which will be listening to the observable build
-     *                 by {@link #buildUseCaseObservable()} ()} method.
+     *                 by {@link #buildUseCaseObservable(Params params)} ()} method.
+     * @param params   Parameters (Optional) used to build/execute this use case.
      */
-    public void execute(DisposableObserver<T> observer) {
+    public void execute(DisposableObserver<T> observer, Params params) {
 
-        final Observable<T> observable = this.buildUseCaseObservable()
+        final Observable<T> observable = this.buildUseCaseObservable(params)
                                              .subscribeOn(mThreadExecutor)
                                              .observeOn(mPostExecutionThread);
         addDisposable(observable.subscribeWith(observer));

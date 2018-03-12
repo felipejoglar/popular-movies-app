@@ -29,6 +29,10 @@ import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
 
 import java.util.List;
 
+/**
+ * {@link MoviesContract.Presenter} that controls communication between views and models of the presentation
+ * layer.
+ */
 public class MoviesPresenter implements MoviesContract.Presenter {
 
     @NonNull
@@ -89,13 +93,13 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @Override
     public void getPopularMovies() {
         mMoviesView.showLoading();
-        mGetPopularMovies.execute(new PopularMoviesListObserver());
+        mGetPopularMovies.execute(new PopularMoviesListObserver(), null);
     }
 
     @Override
     public void getTopRatedMovies() {
         mMoviesView.showLoading();
-        mGetTopRatedMovies.execute(new TopRatedMoviesListObserver());
+        mGetTopRatedMovies.execute(new TopRatedMoviesListObserver(), null);
     }
 
     private final class PopularMoviesListObserver extends BaseObserver<List<Movie>> {

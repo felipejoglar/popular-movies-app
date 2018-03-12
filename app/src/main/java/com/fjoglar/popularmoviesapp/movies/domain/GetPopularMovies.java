@@ -27,9 +27,9 @@ import io.reactivex.Scheduler;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving the welcome message.
+ * retrieving the most popular movies list.
  */
-public class GetPopularMovies extends UseCase<List<Movie>> {
+public class GetPopularMovies extends UseCase<List<Movie>, Void> {
 
     private final DataSource mRepository;
 
@@ -41,7 +41,7 @@ public class GetPopularMovies extends UseCase<List<Movie>> {
     }
 
     @Override
-    public Observable<List<Movie>> buildUseCaseObservable() {
+    public Observable<List<Movie>> buildUseCaseObservable(Void unused) {
         return mRepository.getPopularMovies();
     }
 }
