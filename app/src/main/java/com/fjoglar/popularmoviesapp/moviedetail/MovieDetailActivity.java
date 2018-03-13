@@ -16,6 +16,8 @@
 
 package com.fjoglar.popularmoviesapp.moviedetail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -173,7 +175,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void onVideoClick(Video video) {
+        Intent playVideoIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(getString(R.string.youtube_url) + video.getKey()));
+        Intent chooser = Intent.createChooser(playVideoIntent , "Open With");
 
+        if (playVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(chooser);
+        }
     }
 
     private void setUpReviews() {

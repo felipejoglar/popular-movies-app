@@ -27,4 +27,5 @@ limitations under the License.
     <string name="synopsis_title">SYNOPSIS</string>
     <string name="reviews_title">REVIEWS</string>
     <string name="play_video_content_description">Play video</string>
+    <string name="youtube_url">https://www.youtube.com/watch?v=</string>
 </resources>
