@@ -44,6 +44,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View,
         VideosAdapter.VideoClickListener {
@@ -182,6 +183,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         if (playVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(chooser);
         }
+    }
+
+    @OnClick(R.id.fab_add_favorite)
+    public void addFavorite(View view) {
+
     }
 
     private void setUpReviews() {
