@@ -37,6 +37,10 @@ limitations under the License.
         <activity
             android:name=".moviedetail.MovieDetailActivity"
             android:parentActivityName=".movies.MoviesActivity" />
-    </application>
 
+        <provider
+            android:name="com.fjoglar.popularmoviesapp.data.source.local.provider.MovieContentProvider"
+            android:authorities="com.fjoglar.popularmoviesapp"
+            android:exported="false" />
+    </application>
 </manifest>
