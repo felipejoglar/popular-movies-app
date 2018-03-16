@@ -107,4 +107,14 @@ public class Repository implements DataSource {
             return mRemoteDataSource.getMovieVideos(movieId);
         }
     }
+
+    @Override
+    public Observable<Boolean> saveMovieAsFavorite(Movie movie) {
+        return mLocalDataSource.saveMovieAsFavorite(movie);
+    }
+
+    @Override
+    public Observable<Boolean> deleteMovieFromFavorites(int movieId) {
+        return mLocalDataSource.deleteMovieFromFavorites(movieId);
+    }
 }

@@ -34,13 +34,19 @@ public interface MovieDetailContract {
 
         void showVideos(List<Video> videos);
 
+        void updateSavedMovie();
+
+        void updateDeletedMovie();
+
         void showLoading();
 
         void hideLoading();
+
+        void showMessage(String message);
     }
 
     interface Presenter extends BasePresenter {
 
-        void getMovie();
+        void saveOrDeleteMovieAsFavorite();
     }
 }

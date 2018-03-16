@@ -97,4 +97,16 @@ public class RemoteDataSource implements DataSource {
         return mTheMovieDbApi.getMovieVideos(movieId, BuildConfig.TMDB_API_KEY)
                 .map(VideosResponse::getVideos);
     }
+
+    @Override
+    public Observable<Boolean> saveMovieAsFavorite(Movie movie) {
+        // Not used yet
+        return null;
+    }
+
+    @Override
+    public Observable<Boolean> deleteMovieFromFavorites(int movieId) {
+        // Not used yet
+        return null;
+    }
 }

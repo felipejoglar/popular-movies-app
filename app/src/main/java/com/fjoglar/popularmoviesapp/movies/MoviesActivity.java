@@ -150,7 +150,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     private void initPresenter() {
         mMoviesPresenter = new MoviesPresenter(
                 Repository.getInstance(RemoteDataSource.getInstance(),
-                        LocalDataSource.getInstance()),
+                        LocalDataSource.getInstance(getApplicationContext())),
                 AppPreferences.getInstance(getApplicationContext()),
                 this,
                 SchedulerProvider.getInstance());

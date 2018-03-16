@@ -33,4 +33,8 @@ public interface DataSource {
     Observable<List<Review>> getMovieReviews(int movieId);
 
     Observable<List<Video>> getMovieVideos(int movieId);
+
+    Observable<Boolean> saveMovieAsFavorite(Movie movie);
+
+    Observable<Boolean> deleteMovieFromFavorites(int movieId);
 }

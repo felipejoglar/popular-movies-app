@@ -165,11 +165,11 @@ public class MovieContentProvider extends ContentProvider {
         switch (match) {
             // Handle the single item case, recognized by the ID included in the URI path
             case MOVIE_WITH_ID:
-                // Get the task ID from the URI path
+                // Get the movie ID from the URI path
                 String id = uri.getPathSegments().get(1);
 
-                // Selection is the _ID column = ?, and the Selection args = the row ID from the URI
-                String mSelection = "_id=?";
+                // Selection is the id column = ?, and the Selection args = the movie ID from the URI
+                String mSelection = "id=?";
                 String[] mSelectionArgs = new String[]{id};
 
                 // Use selections/selectionArgs to filter for this ID

@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
@@ -62,6 +64,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     ImageView mImgCover;
     @BindView(R.id.img_poster)
     ImageView mImgPoster;
+    @BindView(R.id.fab_add_favorite)
+    FloatingActionButton mFabAddFavorite;
     @BindView(R.id.text_title)
     TextView mTextTitle;
     @BindView(R.id.text_release_date)
@@ -80,6 +84,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     TextView mTextReviewsTitle;
     @BindView(R.id.rv_reviews)
     RecyclerView mRvReviews;
+
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,9 +191,33 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         }
     }
 
+    @Override
+    public void updateSavedMovie() {
+        mFabAddFavorite.setImageDrawable(
+                getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
+    }
+
+    @Override
+    public void updateDeletedMovie() {
+        mFabAddFavorite.setImageDrawable(
+                getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        mToast = Toast.makeText(this,
+                message,
+                Toast.LENGTH_LONG);
+        mToast.show();
+    }
+
     @OnClick(R.id.fab_add_favorite)
     public void addFavorite(View view) {
-
+        mMovieDetailPresenter.saveOrDeleteMovieAsFavorite();
     }
 
     private void setUpReviews() {
@@ -213,7 +243,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private void initPresenter() {
         mMovieDetailPresenter = new MovieDetailPresenter(this,
                 Repository.getInstance(RemoteDataSource.getInstance(),
-                        LocalDataSource.getInstance()),
+                        LocalDataSource.getInstance(getApplicationContext())),
                 SchedulerProvider.getInstance(),
                 getIntent().getParcelableExtra(INTENT_EXTRA_MOVIE));
     }

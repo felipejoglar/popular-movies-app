@@ -69,6 +69,7 @@ public class Movie implements Parcelable{
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+    private boolean favorite;
 
     public Movie() {
     }
@@ -81,7 +82,7 @@ public class Movie implements Parcelable{
         return id;
     }
 
-    public boolean isVideo() {
+    public boolean hasVideo() {
         return video;
     }
 
@@ -127,6 +128,10 @@ public class Movie implements Parcelable{
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
     }
 
     // Parcelable implementation

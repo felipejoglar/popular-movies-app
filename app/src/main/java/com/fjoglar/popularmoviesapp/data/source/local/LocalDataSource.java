@@ -16,12 +16,16 @@
 
 package com.fjoglar.popularmoviesapp.data.source.local;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.model.Review;
 import com.fjoglar.popularmoviesapp.data.model.Video;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
+import com.fjoglar.popularmoviesapp.data.source.local.provider.MovieContract.MovieEntry;
 
 import java.util.List;
 
@@ -35,9 +39,11 @@ public class LocalDataSource implements DataSource {
     @Nullable
     private static LocalDataSource INSTANCE = null;
 
-    // Prevent direct instantiation.
-    private LocalDataSource() {
+    private Context mContext;
 
+    // Prevent direct instantiation.
+    private LocalDataSource(Context context) {
+        mContext = context;
     }
 
     /**
@@ -45,15 +51,15 @@ public class LocalDataSource implements DataSource {
      *
      * @return the {@link LocalDataSource} instance
      */
-    public static LocalDataSource getInstance() {
+    public static LocalDataSource getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new LocalDataSource();
+            INSTANCE = new LocalDataSource(context);
         }
         return INSTANCE;
     }
 
     /**
-     * Used to force {@link #getInstance()} to create a new instance next time it's called.
+     * Used to force {@link #getInstance(Context)} to create a new instance next time it's called.
      */
     public static void destroyInstance() {
         INSTANCE = null;
@@ -81,5 +87,44 @@ public class LocalDataSource implements DataSource {
     public Observable<List<Video>> getMovieVideos(int movieId) {
         // Not used yet
         return null;
+    }
+
+    @Override
+    public Observable<Boolean> saveMovieAsFavorite(Movie movie) {
+        ContentValues movieContentValues = new ContentValues();
+
+        /*
+         * Sets the values of each column and inserts the movie.
+         */
+        movieContentValues.put(MovieEntry.COLUMN_VOTE_COUNT, movie.getVoteCount());
+        movieContentValues.put(MovieEntry.COLUMN_ID, movie.getId());
+        movieContentValues.put(MovieEntry.COLUMN_VIDEO, movie.hasVideo());
+        movieContentValues.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
+        movieContentValues.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+        movieContentValues.put(MovieEntry.COLUMN_POPULARITY, movie.getPopularity());
+        movieContentValues.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+        movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_LANGUAGE, movie.getOriginalLanguage());
+        movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+        movieContentValues.put(MovieEntry.COLUMN_BACKDROP_PATH, movie.getBackdropPath());
+        movieContentValues.put(MovieEntry.COLUMN_ADULT, movie.isAdult());
+        movieContentValues.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+        movieContentValues.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+
+        Uri resultUri = mContext.getContentResolver().insert(
+                MovieEntry.CONTENT_URI,
+                movieContentValues);
+
+        return Observable.just(!Uri.EMPTY.equals(resultUri));
+    }
+
+    @Override
+    public Observable<Boolean> deleteMovieFromFavorites(int movieId) {
+        int rowsDeleted;
+
+        rowsDeleted = mContext.getContentResolver().delete(
+                MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
+                null,
+                null);
+        return Observable.just(rowsDeleted != 0);
     }
 }
