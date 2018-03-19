@@ -26,6 +26,7 @@ limitations under the License.
     <!-- MOVIE DETAIL -->
     <string name="synopsis_title">SYNOPSIS</string>
     <string name="reviews_title">REVIEWS</string>
+    <string name="author">Written by: %1$s</string>
     <string name="play_video_content_description">Play video</string>
     <string name="youtube_url">https://www.youtube.com/watch?v=</string>
     <string name="favorite">Favorite</string>

@@ -16,6 +16,7 @@
 
 package com.fjoglar.popularmoviesapp.moviedetail;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +36,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     private static final String TAG = ReviewsAdapter.class.getSimpleName();
 
     private List<Review> mReviews;
+    private Context mContext;
 
-    public ReviewsAdapter() {
+    public ReviewsAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -50,7 +53,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextContent.setText(mReviews.get(position).getContent());
-        holder.mTextAuthor.setText(mReviews.get(position).getAuthor());
+        holder.mTextAuthor.setText(
+                mContext.getString(R.string.author, mReviews.get(position).getAuthor()));
     }
 
     @Override

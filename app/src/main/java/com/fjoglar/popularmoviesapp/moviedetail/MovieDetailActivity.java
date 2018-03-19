@@ -221,10 +221,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     private void setUpReviews() {
-        mReviewsAdapter = new ReviewsAdapter();
+        mReviewsAdapter = new ReviewsAdapter(this);
 
         mRvReviews.setHasFixedSize(true);
         mRvReviews.setLayoutManager(new LinearLayoutManager(this));
+        mRvReviews.setNestedScrollingEnabled(false);
         mRvReviews.addItemDecoration(new DividerItemDecoration(mRvReviews.getContext(),
                 DividerItemDecoration.VERTICAL));
         mRvReviews.setAdapter(mReviewsAdapter);
