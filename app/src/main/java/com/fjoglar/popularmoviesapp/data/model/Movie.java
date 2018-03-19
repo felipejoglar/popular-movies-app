@@ -74,6 +74,40 @@ public class Movie implements Parcelable{
     public Movie() {
     }
 
+    public Movie(int voteCount,
+                 int id,
+                 boolean video,
+                 float voteAverage,
+                 String title,
+                 float popularity,
+                 String posterPath,
+                 String originalLanguage,
+                 String originalTitle,
+                 String backdropPath,
+                 boolean adult,
+                 String overview,
+                 String releaseDate,
+                 boolean favorite) {
+        this.voteCount = voteCount;
+        this.id = id;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.favorite = favorite;
+    }
+
+    public Movie(boolean favorite) {
+        this.favorite = favorite;
+    }
+
     public int getVoteCount() {
         return voteCount;
     }
@@ -134,6 +168,10 @@ public class Movie implements Parcelable{
         return favorite;
     }
 
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
     // Parcelable implementation
     @Override
     public int describeContents() {
@@ -156,6 +194,7 @@ public class Movie implements Parcelable{
         dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
         dest.writeString(this.overview);
         dest.writeString(this.releaseDate);
+        dest.writeByte(this.favorite ? (byte) 1 : (byte) 0);
     }
 
     protected Movie(Parcel in) {
@@ -174,6 +213,7 @@ public class Movie implements Parcelable{
         this.adult = in.readByte() != 0;
         this.overview = in.readString();
         this.releaseDate = in.readString();
+        this.favorite = in.readByte() != 0;
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

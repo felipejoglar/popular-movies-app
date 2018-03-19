@@ -25,6 +25,7 @@ import com.fjoglar.popularmoviesapp.data.model.Review;
 import com.fjoglar.popularmoviesapp.data.model.Video;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 import com.fjoglar.popularmoviesapp.moviedetail.domain.DeleteMovieFromFavorites;
+import com.fjoglar.popularmoviesapp.moviedetail.domain.GetMovieFromFavorites;
 import com.fjoglar.popularmoviesapp.moviedetail.domain.GetMovieReviews;
 import com.fjoglar.popularmoviesapp.moviedetail.domain.GetMovieVideos;
 import com.fjoglar.popularmoviesapp.moviedetail.domain.SaveMovieAsFavorite;
@@ -53,6 +54,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
     private final GetMovieVideos mGetMovieVideos;
     private final SaveMovieAsFavorite mSaveMovieAsFavorite;
     private final DeleteMovieFromFavorites mDeleteMovieFromFavorites;
+    private final GetMovieFromFavorites mGetMovieFromFavorites;
 
     public MovieDetailPresenter(@NonNull MovieDetailContract.View movieDetailView,
                                 @NonNull DataSource repository,
@@ -77,6 +79,9 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         mDeleteMovieFromFavorites = new DeleteMovieFromFavorites(mRepository,
                 mSchedulerProvider.io(),
                 mSchedulerProvider.ui());
+        mGetMovieFromFavorites = new GetMovieFromFavorites(mRepository,
+                mSchedulerProvider.io(),
+                mSchedulerProvider.ui());
 
     }
 
@@ -86,12 +91,16 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         getMovie();
         getMovieReviews();
         getMovieVideos();
+        getMovieFromFavorites();
     }
 
     @Override
     public void unsubscribe() {
         mGetMovieReviews.dispose();
         mGetMovieVideos.dispose();
+        mSaveMovieAsFavorite.dispose();
+        mDeleteMovieFromFavorites.dispose();
+        mGetMovieFromFavorites.dispose();
     }
 
     @Override
@@ -125,6 +134,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
     private void deleteMovieFromFavorites() {
         mDeleteMovieFromFavorites.execute(new DeleteFavoriteMovieObserver(),
                 DeleteMovieFromFavorites.Params.forMovie(mMovie.getId()));
+    }
+
+    private void getMovieFromFavorites() {
+        mGetMovieFromFavorites.execute(new GetFavoriteMovieObserver(),
+                GetMovieFromFavorites.Params.forMovie(mMovie.getId()));
     }
 
     private final class MovieReviewsObserver extends BaseObserver<List<Review>> {
@@ -168,6 +182,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         @Override
         public void onNext(Boolean isSaved) {
             if (isSaved) {
+                mMovie.setFavorite(true);
                 mMovieDetailView.updateSavedMovie();
                 mMovieDetailView.showMessage(Constants.SAVED_AS_FAVORITE);
             }
@@ -189,9 +204,33 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         @Override
         public void onNext(Boolean isDeleted) {
             if (isDeleted) {
-                mMovieDetailView.updateSavedMovie();
+                mMovieDetailView.updateDeletedMovie();
                 mMovieDetailView.showMessage(Constants.DELETED_FROM_FAVORITES);
             }
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+    }
+
+    private final class GetFavoriteMovieObserver extends BaseObserver<Movie> {
+
+        @Override
+        public void onNext(Movie movie) {
+            if (movie.isFavorite()) {
+                mMovie.setFavorite(true);
+                mMovieDetailView.updateSavedMovie();
+            } else {
+                mMovieDetailView.updateDeletedMovie();
+            }
+
         }
 
         @Override

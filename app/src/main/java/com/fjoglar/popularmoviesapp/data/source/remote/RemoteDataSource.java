@@ -87,6 +87,18 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
+    public Observable<List<Movie>> getFavoriteMovies() {
+        // Not used yet
+        return null;
+    }
+
+    @Override
+    public Observable<Movie> getFavoriteMovieById(int movieId) {
+        // Not used yet
+        return null;
+    }
+
+    @Override
     public Observable<List<Review>> getMovieReviews(int movieId) {
         return mTheMovieDbApi.getMovieReviews(movieId, BuildConfig.TMDB_API_KEY)
                 .map(ReviewsResponse::getReviews);

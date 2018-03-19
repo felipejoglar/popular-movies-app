@@ -23,6 +23,7 @@ import com.fjoglar.popularmoviesapp.data.Constants;
 import com.fjoglar.popularmoviesapp.data.model.Movie;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 import com.fjoglar.popularmoviesapp.data.source.preferences.Preferences;
+import com.fjoglar.popularmoviesapp.movies.domain.GetFavoriteMovies;
 import com.fjoglar.popularmoviesapp.movies.domain.GetPopularMovies;
 import com.fjoglar.popularmoviesapp.movies.domain.GetTopRatedMovies;
 import com.fjoglar.popularmoviesapp.util.schedulers.BaseSchedulerProvider;
@@ -49,6 +50,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     private final GetPopularMovies mGetPopularMovies;
     private final GetTopRatedMovies mGetTopRatedMovies;
+    private final GetFavoriteMovies mGetFavoriteMovies;
 
     public MoviesPresenter(@NonNull DataSource repository,
                            @NonNull Preferences preferences,
@@ -67,6 +69,9 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mGetTopRatedMovies = new GetTopRatedMovies(mRepository,
                 mSchedulerProvider.computation(),
                 mSchedulerProvider.ui());
+        mGetFavoriteMovies = new GetFavoriteMovies(mRepository,
+                mSchedulerProvider.computation(),
+                mSchedulerProvider.ui());
     }
 
     @Override
@@ -79,6 +84,8 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             case Constants.MOVIES_TOP_RATED:
                 getTopRatedMovies();
                 break;
+            case Constants.MOVIES_FAVORITE:
+                getFavoriteMovies();
             default:
                 break;
         }
@@ -88,6 +95,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     public void unsubscribe() {
         mGetPopularMovies.dispose();
         mGetTopRatedMovies.dispose();
+        mGetFavoriteMovies.dispose();
     }
 
     @Override
@@ -100,6 +108,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     public void getTopRatedMovies() {
         mMoviesView.showLoading();
         mGetTopRatedMovies.execute(new TopRatedMoviesListObserver(), null);
+    }
+
+    @Override
+    public void getFavoriteMovies() {
+        mMoviesView.showLoading();
+        mGetFavoriteMovies.execute(new FavoriteMoviesListObserver(), null);
     }
 
     private final class PopularMoviesListObserver extends BaseObserver<List<Movie>> {
@@ -132,6 +146,25 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         public void onComplete() {
             mMoviesView.hideLoading();
             mPreferences.setCurrentDisplayedMovies(Constants.MOVIES_TOP_RATED);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+    }
+
+    private final class FavoriteMoviesListObserver extends BaseObserver<List<Movie>> {
+
+        @Override
+        public void onNext(List<Movie> movies) {
+            mMoviesView.showMovies(movies);
+        }
+
+        @Override
+        public void onComplete() {
+            mMoviesView.hideLoading();
+            mPreferences.setCurrentDisplayedMovies(Constants.MOVIES_FAVORITE);
         }
 
         @Override

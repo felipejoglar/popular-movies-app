@@ -30,6 +30,10 @@ public interface DataSource {
 
     Observable<List<Movie>> getTopRatedMovies();
 
+    Observable<List<Movie>> getFavoriteMovies();
+
+    Observable<Movie> getFavoriteMovieById(int movieId);
+
     Observable<List<Review>> getMovieReviews(int movieId);
 
     Observable<List<Video>> getMovieVideos(int movieId);

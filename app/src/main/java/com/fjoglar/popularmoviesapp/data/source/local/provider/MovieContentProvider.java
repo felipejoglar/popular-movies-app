@@ -95,8 +95,8 @@ public class MovieContentProvider extends ContentProvider {
                 // Get the id from the URI
                 String id = uri.getPathSegments().get(1);
 
-                // Selection is the _ID column = ?, and the Selection args = the row ID from the URI
-                String mSelection = "_id=?";
+                // Selection is the id column = ?, and the Selection args = the row ID from the URI
+                String mSelection = "id=?";
                 String[] mSelectionArgs = new String[]{id};
 
                 // Construct a query as we would normally, passing in the selection/args

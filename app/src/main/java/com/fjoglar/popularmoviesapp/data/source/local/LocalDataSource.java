@@ -18,6 +18,7 @@ package com.fjoglar.popularmoviesapp.data.source.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
@@ -26,6 +27,7 @@ import com.fjoglar.popularmoviesapp.data.model.Review;
 import com.fjoglar.popularmoviesapp.data.model.Video;
 import com.fjoglar.popularmoviesapp.data.source.DataSource;
 import com.fjoglar.popularmoviesapp.data.source.local.provider.MovieContract.MovieEntry;
+import com.fjoglar.popularmoviesapp.util.RepositoryUtils;
 
 import java.util.List;
 
@@ -75,6 +77,28 @@ public class LocalDataSource implements DataSource {
     public Observable<List<Movie>> getTopRatedMovies() {
         // Not used yet
         return null;
+    }
+
+    @Override
+    public Observable<List<Movie>> getFavoriteMovies() {
+        Cursor result = mContext.getContentResolver().query(
+                MovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+        return Observable.just(RepositoryUtils.toMoviesList(result));
+    }
+
+    @Override
+    public Observable<Movie> getFavoriteMovieById(int movieId) {
+        Cursor result = mContext.getContentResolver().query(
+                MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
+                null,
+                null,
+                null,
+                null);
+        return Observable.just(RepositoryUtils.toMovie(result));
     }
 
     @Override

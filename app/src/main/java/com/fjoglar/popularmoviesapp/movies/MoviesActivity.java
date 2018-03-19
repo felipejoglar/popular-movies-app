@@ -105,6 +105,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
             case R.id.top_rated:
                 mMoviesPresenter.getTopRatedMovies();
                 return true;
+            case R.id.favorite:
+                mMoviesPresenter.getFavoriteMovies();
             default:
                 return super.onOptionsItemSelected(item);
         }

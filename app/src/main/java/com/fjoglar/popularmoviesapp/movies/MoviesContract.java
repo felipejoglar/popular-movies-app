@@ -38,5 +38,7 @@ public interface MoviesContract {
         void getPopularMovies();
 
         void getTopRatedMovies();
+
+        void getFavoriteMovies();
     }
 }

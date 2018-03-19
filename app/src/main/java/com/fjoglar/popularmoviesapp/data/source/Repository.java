@@ -89,6 +89,16 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public Observable<List<Movie>> getFavoriteMovies() {
+        return mLocalDataSource.getFavoriteMovies();
+    }
+
+    @Override
+    public Observable<Movie> getFavoriteMovieById(int movieId) {
+        return mLocalDataSource.getFavoriteMovieById(movieId);
+    }
+
+    @Override
     public Observable<List<Review>> getMovieReviews(int movieId) {
         if (false) {
             // Not used yet
