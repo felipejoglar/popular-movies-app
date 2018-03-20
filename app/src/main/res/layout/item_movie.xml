@@ -21,10 +21,9 @@
     <ImageView
         android:id="@+id/img_poster"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="296dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/default_image_content_description"
-        android:maxHeight="264dp"
         android:scaleType="centerCrop" />
 
 </android.support.constraint.ConstraintLayout>
