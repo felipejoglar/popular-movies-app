@@ -204,6 +204,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         @Override
         public void onNext(Boolean isDeleted) {
             if (isDeleted) {
+                mMovie.setFavorite(false);
                 mMovieDetailView.updateDeletedMovie();
                 mMovieDetailView.showMessage(Constants.DELETED_FROM_FAVORITES);
             }
@@ -228,6 +229,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
                 mMovie.setFavorite(true);
                 mMovieDetailView.updateSavedMovie();
             } else {
+                mMovie.setFavorite(false);
                 mMovieDetailView.updateDeletedMovie();
             }
 
