@@ -116,11 +116,19 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mGetFavoriteMovies.execute(new FavoriteMoviesListObserver(), null);
     }
 
+    private void showMovies(List<Movie> movies) {
+        if (movies.isEmpty()) {
+            mMoviesView.showEmptyView();
+        } else {
+            mMoviesView.showMovies(movies);
+        }
+    }
+
     private final class PopularMoviesListObserver extends BaseObserver<List<Movie>> {
 
         @Override
         public void onNext(List<Movie> movies) {
-            mMoviesView.showMovies(movies);
+            showMovies(movies);
         }
 
         @Override
@@ -139,7 +147,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onNext(List<Movie> movies) {
-            mMoviesView.showMovies(movies);
+            showMovies(movies);
         }
 
         @Override
@@ -158,7 +166,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onNext(List<Movie> movies) {
-            mMoviesView.showMovies(movies);
+            showMovies(movies);
         }
 
         @Override

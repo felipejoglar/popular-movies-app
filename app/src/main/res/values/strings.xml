@@ -30,4 +30,5 @@ limitations under the License.
     <string name="play_video_content_description">Play video</string>
     <string name="youtube_url">https://www.youtube.com/watch?v=</string>
     <string name="favorite">Favorite</string>
+    <string name="empty_view_message">There are no movies to show</string>
 </resources>

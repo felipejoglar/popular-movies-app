@@ -19,6 +19,7 @@ package com.fjoglar.popularmoviesapp.movies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     RecyclerView mRvMovies;
     @BindView(R.id.progress_loading)
     ProgressBar mProgressLoading;
+    @BindView(R.id.empty_view)
+    ConstraintLayout mEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +123,15 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     @Override
     public void showMovies(List<Movie> movies) {
+        mEmptyView.setVisibility(View.GONE);
+        mRvMovies.setVisibility(View.VISIBLE);
         mMoviesAdapter.setMoviesData(movies);
+    }
+
+    @Override
+    public void showEmptyView() {
+        mRvMovies.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -28,6 +28,8 @@ public interface MoviesContract {
 
         void showMovies(List<Movie> movies);
 
+        void showEmptyView();
+
         void showLoading();
 
         void hideLoading();
