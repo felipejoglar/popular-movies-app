@@ -16,14 +16,17 @@
 
 package com.fjoglar.popularmoviesapp.moviedetail;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fjoglar.popularmoviesapp.R;
 import com.fjoglar.popularmoviesapp.data.model.Video;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,8 +40,10 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     private final VideoClickListener mOnClickListener;
 
     private List<Video> mVideos;
+    private Context mContext;
 
-    public VideosAdapter(VideoClickListener listener) {
+    public VideosAdapter(Context context, VideoClickListener listener) {
+        mContext = context;
         mOnClickListener = listener;
     }
 
@@ -53,6 +58,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextVideo.setText(mVideos.get(position).getName());
+        Picasso.with(mContext)
+                .load(mContext.getString(R.string.youtube_thumbnail_url, mVideos.get(position).getKey()))
+                .into(holder.mImgThumbnail);
     }
 
     @Override
@@ -69,6 +77,8 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.img_thumbnail)
+        ImageView mImgThumbnail;
         @BindView(R.id.text_video)
         TextView mTextVideo;
 

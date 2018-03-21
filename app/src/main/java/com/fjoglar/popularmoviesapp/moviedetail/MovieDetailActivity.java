@@ -134,12 +134,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     public void showMovie(Movie movie) {
         Picasso.with(this)
-                .load("http://image.tmdb.org/t/p/w1280" +
-                        movie.getBackdropPath())
+                .load(getString(R.string.tmdb_backdrop_url, movie.getBackdropPath()))
                 .into(mImgCover);
         Picasso.with(this)
-                .load("http://image.tmdb.org/t/p/w500" +
-                        movie.getPosterPath())
+                .load(getString(R.string.tmdb_image_url, movie.getPosterPath()))
                 .into(mImgPoster);
         mTextTitle.setText(movie.getTitle());
         mTextReleaseDate.setText(movie.getReleaseDate());
@@ -233,7 +231,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     private void setUpVideos() {
-        mVideosAdapter = new VideosAdapter(this);
+        mVideosAdapter = new VideosAdapter(this, this);
 
         mRvVideos.setHasFixedSize(true);
         mRvVideos.setLayoutManager(new LinearLayoutManager(this,

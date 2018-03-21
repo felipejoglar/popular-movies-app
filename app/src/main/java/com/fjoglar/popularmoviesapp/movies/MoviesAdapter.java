@@ -57,8 +57,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Picasso.with(mContext)
-                .load("http://image.tmdb.org/t/p/w500" +
-                        mMovies.get(position).getPosterPath())
+                .load(mContext.getString(R.string.tmdb_image_url, mMovies.get(position).getPosterPath()))
                 .into(holder.mImgPoster);
     }
 

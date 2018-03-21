@@ -18,10 +18,13 @@ limitations under the License.
 
     <!-- MOVIES LIST -->
     <string name="default_image_content_description">Movie poster</string>
+    <string name="tmdb_image_url">http://image.tmdb.org/t/p/w500%1$s</string>
+    <string name="empty_view_message">There are no movies to show</string>
 
     <!-- MOVIES MENU -->
     <string name="most_popular">Most Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="favorite">Favorite</string>
 
     <!-- MOVIE DETAIL -->
     <string name="synopsis_title">SYNOPSIS</string>
@@ -29,6 +32,6 @@ limitations under the License.
     <string name="author">Written by: %1$s</string>
     <string name="play_video_content_description">Play video</string>
     <string name="youtube_url">https://www.youtube.com/watch?v=</string>
-    <string name="favorite">Favorite</string>
-    <string name="empty_view_message">There are no movies to show</string>
+    <string name="youtube_thumbnail_url">https://img.youtube.com/vi/%1$s/0.jpg</string>
+    <string name="tmdb_backdrop_url">http://image.tmdb.org/t/p/w1280%1$s</string>
 </resources>
