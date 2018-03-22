@@ -70,22 +70,12 @@ public class Repository implements DataSource {
 
     @Override
     public Observable<List<Movie>> getPopularMovies() {
-        if (false) {
-            // Not used yet
-            return mLocalDataSource.getPopularMovies();
-        } else {
-            return mRemoteDataSource.getPopularMovies();
-        }
+        return mRemoteDataSource.getPopularMovies();
     }
 
     @Override
     public Observable<List<Movie>> getTopRatedMovies() {
-        if (false) {
-            // Not used yet
-            return mLocalDataSource.getTopRatedMovies();
-        } else {
-            return mRemoteDataSource.getTopRatedMovies();
-        }
+        return mRemoteDataSource.getTopRatedMovies();
     }
 
     @Override
@@ -100,22 +90,12 @@ public class Repository implements DataSource {
 
     @Override
     public Observable<List<Review>> getMovieReviews(int movieId) {
-        if (false) {
-            // Not used yet
-            return mLocalDataSource.getMovieReviews(movieId);
-        } else {
-            return mRemoteDataSource.getMovieReviews(movieId);
-        }
+        return mRemoteDataSource.getMovieReviews(movieId);
     }
 
     @Override
     public Observable<List<Video>> getMovieVideos(int movieId) {
-        if (false) {
-            // Not used yet
-            return mLocalDataSource.getMovieVideos(movieId);
-        } else {
-            return mRemoteDataSource.getMovieVideos(movieId);
-        }
+        return mRemoteDataSource.getMovieVideos(movieId);
     }
 
     @Override
