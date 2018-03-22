@@ -34,4 +34,7 @@ limitations under the License.
     <string name="youtube_url">https://www.youtube.com/watch?v=</string>
     <string name="youtube_thumbnail_url">https://img.youtube.com/vi/%1$s/0.jpg</string>
     <string name="tmdb_backdrop_url">http://image.tmdb.org/t/p/w1280%1$s</string>
+    <string name="share">Share</string>
+    <string name="share_dialog_title">Share with:</string>
+    <string name="sharing_text">Hey! Check out this awesome movie! %1$s.</string>
 </resources>

@@ -17,15 +17,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/most_popular"
-        android:title="@string/most_popular"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/top_rated"
-        android:title="@string/top_rated"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/favorite"
-        android:title="@string/favorite"
-        app:showAsAction="never" />
+        android:id="@+id/share"
+        android:title="@string/share"
+        android:icon="@drawable/ic_share_white_24dp"
+        app:showAsAction="always" />
 </menu>

@@ -21,10 +21,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -127,6 +130,23 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_movie_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share:
+                mMovieDetailPresenter.shareMovie();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void setPresenter(@NonNull MovieDetailContract.Presenter presenter) {
         mMovieDetailPresenter = presenter;
     }
@@ -180,17 +200,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
-    public void onVideoClick(Video video) {
-        Intent playVideoIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.youtube_url) + video.getKey()));
-        Intent chooser = Intent.createChooser(playVideoIntent , "Open With");
-
-        if (playVideoIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(chooser);
-        }
-    }
-
-    @Override
     public void updateSavedMovie() {
         mFabAddFavorite.setImageDrawable(
                 getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
@@ -212,6 +221,39 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
                 message,
                 Toast.LENGTH_LONG);
         mToast.show();
+    }
+
+    @Override
+    public void shareMovie(String movie, String video) {
+        String mimeType = "text/plain";
+        String title = getString(R.string.share_dialog_title);
+        StringBuilder message = new StringBuilder();
+        String space = " ";
+
+        message.append(getString(R.string.sharing_text, movie));
+        message.append(space);
+        if (!video.isEmpty()) {
+            message.append(getString(R.string.youtube_url));
+            message.append(video);
+        }
+
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle(title)
+                .setText(message.toString())
+                .startChooser();
+    }
+
+    @Override
+    public void onVideoClick(Video video) {
+        Intent playVideoIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(getString(R.string.youtube_url) + video.getKey()));
+        Intent chooser = Intent.createChooser(playVideoIntent , "Open With");
+
+        if (playVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(chooser);
+        }
     }
 
     @OnClick(R.id.fab_add_favorite)

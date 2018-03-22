@@ -49,6 +49,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
     private final BaseSchedulerProvider mSchedulerProvider;
 
     private final Movie mMovie;
+    private String mVideoKey;
 
     private final GetMovieReviews mGetMovieReviews;
     private final GetMovieVideos mGetMovieVideos;
@@ -112,6 +113,11 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         }
     }
 
+    @Override
+    public void shareMovie() {
+        mMovieDetailView.shareMovie(mMovie.getTitle(), mVideoKey);
+    }
+
     private void getMovie() {
         mMovieDetailView.showMovie(mMovie);
     }
@@ -164,6 +170,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
         @Override
         public void onNext(List<Video> videos) {
             mMovieDetailView.showVideos(videos);
+            mVideoKey = videos.get(0).getKey();
         }
 
         @Override

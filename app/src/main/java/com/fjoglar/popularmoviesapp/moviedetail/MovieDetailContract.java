@@ -43,10 +43,14 @@ public interface MovieDetailContract {
         void hideLoading();
 
         void showMessage(String message);
+
+        void shareMovie(String movie, String video);
     }
 
     interface Presenter extends BasePresenter {
 
         void saveOrDeleteMovieAsFavorite();
+
+        void shareMovie();
     }
 }
