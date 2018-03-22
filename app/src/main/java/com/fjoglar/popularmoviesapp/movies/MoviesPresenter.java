@@ -36,6 +36,10 @@ import java.util.List;
  */
 public class MoviesPresenter implements MoviesContract.Presenter {
 
+    private static final int NAV_POPULAR_MOVIES = 0;
+    private static final int NAV_TOP_RATED_MOVIES = 1;
+    private static final int NAV_FAVORITE_MOVIES = 2;
+
     @NonNull
     private final DataSource mRepository;
 
@@ -116,11 +120,11 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mGetFavoriteMovies.execute(new FavoriteMoviesListObserver(), null);
     }
 
-    private void showMovies(List<Movie> movies) {
+    private void showMovies(List<Movie> movies, int nav) {
         if (movies.isEmpty()) {
-            mMoviesView.showEmptyView();
+            mMoviesView.showEmptyView(nav);
         } else {
-            mMoviesView.showMovies(movies);
+            mMoviesView.showMovies(movies, nav);
         }
     }
 
@@ -128,7 +132,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onNext(List<Movie> movies) {
-            showMovies(movies);
+            showMovies(movies, NAV_POPULAR_MOVIES);
         }
 
         @Override
@@ -147,7 +151,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onNext(List<Movie> movies) {
-            showMovies(movies);
+            showMovies(movies, NAV_TOP_RATED_MOVIES);
         }
 
         @Override
@@ -166,7 +170,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onNext(List<Movie> movies) {
-            showMovies(movies);
+            showMovies(movies, NAV_FAVORITE_MOVIES);
         }
 
         @Override

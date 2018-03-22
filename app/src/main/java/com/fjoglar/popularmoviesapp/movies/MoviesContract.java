@@ -26,9 +26,9 @@ public interface MoviesContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showMovies(List<Movie> movies);
+        void showMovies(List<Movie> movies, int nav);
 
-        void showEmptyView();
+        void showEmptyView(int nav);
 
         void showLoading();
 

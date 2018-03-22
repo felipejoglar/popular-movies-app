@@ -20,10 +20,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -43,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
-        MoviesAdapter.MovieClickListener {
+        MoviesAdapter.MovieClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mMoviesAdapter;
@@ -54,6 +54,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     ProgressBar mProgressLoading;
     @BindView(R.id.empty_view)
     ConstraintLayout mEmptyView;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView mBottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         ButterKnife.bind(this);
 
         setUpRecyclerView();
+        mBottomNavigation.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -95,25 +98,21 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.movies_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.most_popular:
                 mMoviesPresenter.getPopularMovies();
-                return true;
+                break;
             case R.id.top_rated:
                 mMoviesPresenter.getTopRatedMovies();
-                return true;
+                break;
             case R.id.favorite:
                 mMoviesPresenter.getFavoriteMovies();
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                return false;
         }
+        return true;
     }
 
     @Override
@@ -122,16 +121,18 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    public void showMovies(List<Movie> movies) {
+    public void showMovies(List<Movie> movies, int nav) {
         mEmptyView.setVisibility(View.GONE);
         mRvMovies.setVisibility(View.VISIBLE);
         mMoviesAdapter.setMoviesData(movies);
+        mBottomNavigation.getMenu().getItem(nav).setChecked(true);
     }
 
     @Override
-    public void showEmptyView() {
+    public void showEmptyView(int nav) {
         mRvMovies.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.VISIBLE);
+        mBottomNavigation.getMenu().getItem(nav).setChecked(true);
     }
 
     @Override
