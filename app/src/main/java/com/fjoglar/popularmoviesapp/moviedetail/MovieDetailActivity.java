@@ -201,13 +201,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     public void updateSavedMovie() {
         mFabAddFavorite.setImageDrawable(
-                getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
+                getResources().getDrawable(R.drawable.ic_favorite_24dp));
     }
 
     @Override
     public void updateDeletedMovie() {
         mFabAddFavorite.setImageDrawable(
-                getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
+                getResources().getDrawable(R.drawable.ic_favorite_border_24dp));
     }
 
     @Override

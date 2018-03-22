@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="@+id/img_thumbnail"
         app:layout_constraintStart_toStartOf="@+id/img_thumbnail"
         app:layout_constraintTop_toTopOf="@+id/img_thumbnail"
-        app:srcCompat="@drawable/ic_play_circle_outline_black_48dp" />
+        app:srcCompat="@drawable/ic_play_circle_outline_48dp" />
 
     <TextView
         android:id="@+id/text_video"
