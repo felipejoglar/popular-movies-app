@@ -92,7 +92,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
