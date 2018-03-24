@@ -24,10 +24,26 @@ import com.fjoglar.popularmoviesapp.data.source.local.provider.MovieContract.Mov
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 
+    private static MovieDbHelper sInstance;
+
     private static final String DATABASE_NAME = "movie.db";
     private static final int DATABASE_VERSION = 1;
 
-    public MovieDbHelper(Context context) {
+    public static synchronized MovieDbHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that we
+        // don't accidentally leak an Activity's context.
+        if (sInstance == null) {
+            sInstance = new MovieDbHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    /**
+     * Constructor should be private to prevent direct instantiation.
+     * make call to static method "getInstance()" instead.
+     */
+    private MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
