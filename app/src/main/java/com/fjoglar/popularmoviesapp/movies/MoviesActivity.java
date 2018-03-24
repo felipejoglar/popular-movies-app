@@ -37,6 +37,7 @@ import com.fjoglar.popularmoviesapp.data.source.remote.RemoteDataSource;
 import com.fjoglar.popularmoviesapp.moviedetail.MovieDetailActivity;
 import com.fjoglar.popularmoviesapp.util.schedulers.SchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,8 +46,14 @@ import butterknife.ButterKnife;
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View,
         MoviesAdapter.MovieClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private static final String MOVIES_LIST = "movies_list";
+    private static final String NAVIGATION = "navigation";
+
     private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mMoviesAdapter;
+    private List<Movie> mMoviesList;
+    private int mNavigation;
+    private boolean mForceLoad;
 
     @BindView(R.id.rv_movies)
     RecyclerView mRvMovies;
@@ -65,6 +72,15 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
         ButterKnife.bind(this);
 
+        mForceLoad = true;
+        mNavigation = 0;
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            mMoviesList = savedInstanceState.getParcelableArrayList(MOVIES_LIST);
+            mNavigation = savedInstanceState.getInt(NAVIGATION);
+            mForceLoad = false;
+        }
+
         setUpRecyclerView();
         mBottomNavigation.setOnNavigationItemSelectedListener(this);
     }
@@ -78,7 +94,9 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     protected void onResume() {
         super.onResume();
         initPresenter();
-        mMoviesPresenter.subscribe();
+        if (mForceLoad) {
+            mMoviesPresenter.subscribe();
+        }
     }
 
     @Override
@@ -95,6 +113,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(MOVIES_LIST, new ArrayList<>(mMoviesAdapter.getList()));
+        outState.putInt(NAVIGATION, mNavigation);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -126,6 +151,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRvMovies.setVisibility(View.VISIBLE);
         mMoviesAdapter.setMoviesData(movies);
         mBottomNavigation.getMenu().getItem(nav).setChecked(true);
+        mNavigation = nav;
     }
 
     @Override
@@ -160,6 +186,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRvMovies.setLayoutManager(layoutManager);
         mRvMovies.setHasFixedSize(true);
         mRvMovies.setAdapter(mMoviesAdapter);
+        showMovies(mMoviesList, mNavigation);
     }
 
     private void initPresenter() {

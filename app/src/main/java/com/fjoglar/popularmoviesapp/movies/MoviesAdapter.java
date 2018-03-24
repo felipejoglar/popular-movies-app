@@ -72,6 +72,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public List<Movie> getList() {
+        return mMovies;
+    }
+
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
