@@ -1,4 +1,4 @@
-# ![Popular Movies](https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png) Popular Movies App
+# ![Popular Movies](https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png) Popular Movies App
 
 [![License Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-green.svg)](https://github.com/fjoglar/popular-movies-app/blob/master/LICENSE.txt)
 [![fjoglar twitter](https://img.shields.io/badge/twitter-@felipejoglar-blue.svg)](http://twitter.com/felipejoglar)
@@ -10,22 +10,22 @@ The data layer is accessed via Repository pattern and make use of `ContentProvid
 
 ## Features
 
-### Main navigation showing most popular and top rated movies, also a detailed view of movie details with videos and user reviews.
+#### Main navigation showing most popular and top rated movies, also a detailed view of movie details with videos and user reviews.
 
 <p align="center">
-<img src="https://github.com/fjoglar/android-dev-challenge/blob/master/assets/images/activity-lifecycle.png" alt="Main Navigation" style="width: 10px;"/>
+<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/main-navigation.gif" alt="Main Navigation" style="width: 10px;"/>
 </p>
 
-### Launch Youtube app to watch the movie videos directly form the app
+#### Launch Youtube app to watch the movie videos directly form the app
 
 <p align="center">
-<img src="https://github.com/fjoglar/android-dev-challenge/blob/master/assets/images/activity-lifecycle.png" alt="Youtube Videos" style="width: 10px;"/>
+<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/youtube-videos.gif" alt="Youtube Videos" style="width: 10px;"/>
 </p>
 
-### Add and remove a movie for your favorite list
+#### Add and remove a movie for your favorite list
 
 <p align="center">
-<img src="https://github.com/fjoglar/android-dev-challenge/blob/master/assets/images/activity-lifecycle.png" alt="Favorites Functionality" style="width: 10px;"/>
+<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/favorites.gif" alt="Favorites Functionality" style="width: 10px;"/>
 </p>
 
 
