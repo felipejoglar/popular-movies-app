@@ -78,7 +78,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
             // Restore value of members from saved state
             mMoviesList = savedInstanceState.getParcelableArrayList(MOVIES_LIST);
             mNavigation = savedInstanceState.getInt(NAVIGATION);
-            mForceLoad = false;
+            // If we are in favorites movies we force the load of the new list
+            mForceLoad = mNavigation == 2;
         }
 
         setUpRecyclerView();
