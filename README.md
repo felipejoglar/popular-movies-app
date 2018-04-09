@@ -10,24 +10,9 @@ The data layer is accessed via Repository pattern and make use of `ContentProvid
 
 ## Features
 
-#### Main navigation showing most popular and top rated movies, also a detailed view of movie details with videos and user reviews.
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/main-navigation.gif" alt="Main Navigation" style="width: 10px;"/>
-</p>
-
-#### Launch Youtube app to watch the movie videos directly form the app
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/youtube-videos.gif" alt="Youtube Videos" style="width: 10px;"/>
-</p>
-
-#### Add and remove a movie for your favorite list
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/favorites.gif" alt="Favorites Functionality" style="width: 10px;"/>
-</p>
-
+Main navigation with most popular and top rated movies plus detailed view | Launch Youtube app to watch the movie videos directly form the app | Launch Youtube app to watch the movie videos directly form the app
+------------ | ------------- | -------------
+<img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/main-navigation.gif" width="250px" alt="Main Navigation"/> | <img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/youtube-videos.gif" width="250px" alt="Youtube Videos"/> | <img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/favorites.gif" width="250px" alt="Favorites Functionality"/>
 
 
 ## How to build the app
@@ -87,12 +72,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-> **NOTE:** This project was submitted by Felipe Joglar as part of the Android Developer Nanodegree At Udacity.
->
-> As part of Udacity Honor code, your submissions must be your own work, hence submitting this project as yours will cause you to break the Udacity Honor Code and the suspension of your account.
->
-> Me, the author of the project, allow you to check the code as a reference, but if you submit it, it's your own responsibility if you get expelled.
->
-> Besides this notice, the above license applies and this license notice must be included in all works derived from this project.
+>##### **NOTE:** This project was submitted by Felipe Joglar as part of the Android Developer Nanodegree At Udacity.
+>##### As part of Udacity Honor code, your submissions must be your own work, hence submitting this project as yours will cause you to break the Udacity Honor Code and the suspension of your account.
+>##### Me, the author of the project, allow you to check the code as a reference, but if you submit it, it's your own responsibility if you get expelled.
+>##### Besides this notice, the above license applies and this license notice must be included in all works derived from this project.
 
-> **NOTE 2:** The images from the logo and empty view used within this app were created by [Graphicrepublic - Freepik.com](https://www.freepik.es/fotos-vectores-gratis/fondo)</a>.
+>##### **NOTE 2:** The images from the logo and empty view used within this app were created by [Graphicrepublic - Freepik.com](https://www.freepik.es/fotos-vectores-gratis/fondo)</a>.
