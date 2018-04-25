@@ -81,24 +81,28 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public Observable<List<Movie>> getFavoriteMovies() {
-        Cursor result = mContext.getContentResolver().query(
-                MovieEntry.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-        return Observable.just(RepositoryUtils.toMoviesList(result));
+        return Observable.fromCallable(() -> {
+            Cursor result = mContext.getContentResolver().query(
+                    MovieEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null);
+            return RepositoryUtils.toMoviesList(result);
+        });
     }
 
     @Override
     public Observable<Movie> getFavoriteMovieById(int movieId) {
-        Cursor result = mContext.getContentResolver().query(
-                MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
-                null,
-                null,
-                null,
-                null);
-        return Observable.just(RepositoryUtils.toMovie(result));
+        return Observable.fromCallable(() -> {
+            Cursor result = mContext.getContentResolver().query(
+                    MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
+                    null,
+                    null,
+                    null,
+                    null);
+            return RepositoryUtils.toMovie(result);
+        });
     }
 
     @Override
@@ -115,40 +119,44 @@ public class LocalDataSource implements DataSource {
 
     @Override
     public Observable<Boolean> saveMovieAsFavorite(Movie movie) {
-        ContentValues movieContentValues = new ContentValues();
+        return Observable.fromCallable(() -> {
+            ContentValues movieContentValues = new ContentValues();
 
-        /*
-         * Sets the values of each column and inserts the movie.
-         */
-        movieContentValues.put(MovieEntry.COLUMN_VOTE_COUNT, movie.getVoteCount());
-        movieContentValues.put(MovieEntry.COLUMN_ID, movie.getId());
-        movieContentValues.put(MovieEntry.COLUMN_VIDEO, movie.hasVideo());
-        movieContentValues.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
-        movieContentValues.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
-        movieContentValues.put(MovieEntry.COLUMN_POPULARITY, movie.getPopularity());
-        movieContentValues.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
-        movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_LANGUAGE, movie.getOriginalLanguage());
-        movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
-        movieContentValues.put(MovieEntry.COLUMN_BACKDROP_PATH, movie.getBackdropPath());
-        movieContentValues.put(MovieEntry.COLUMN_ADULT, movie.isAdult());
-        movieContentValues.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
-        movieContentValues.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+            /*
+             * Sets the values of each column and inserts the movie.
+             */
+            movieContentValues.put(MovieEntry.COLUMN_VOTE_COUNT, movie.getVoteCount());
+            movieContentValues.put(MovieEntry.COLUMN_ID, movie.getId());
+            movieContentValues.put(MovieEntry.COLUMN_VIDEO, movie.hasVideo());
+            movieContentValues.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
+            movieContentValues.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+            movieContentValues.put(MovieEntry.COLUMN_POPULARITY, movie.getPopularity());
+            movieContentValues.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_LANGUAGE, movie.getOriginalLanguage());
+            movieContentValues.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+            movieContentValues.put(MovieEntry.COLUMN_BACKDROP_PATH, movie.getBackdropPath());
+            movieContentValues.put(MovieEntry.COLUMN_ADULT, movie.isAdult());
+            movieContentValues.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+            movieContentValues.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
 
-        Uri resultUri = mContext.getContentResolver().insert(
-                MovieEntry.CONTENT_URI,
-                movieContentValues);
+            Uri resultUri = mContext.getContentResolver().insert(
+                    MovieEntry.CONTENT_URI,
+                    movieContentValues);
 
-        return Observable.just(!Uri.EMPTY.equals(resultUri));
+            return !Uri.EMPTY.equals(resultUri);
+        });
     }
 
     @Override
     public Observable<Boolean> deleteMovieFromFavorites(int movieId) {
-        int rowsDeleted;
+        return Observable.fromCallable(() -> {
+            int rowsDeleted;
 
-        rowsDeleted = mContext.getContentResolver().delete(
-                MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
-                null,
-                null);
-        return Observable.just(rowsDeleted != 0);
+            rowsDeleted = mContext.getContentResolver().delete(
+                    MovieEntry.CONTENT_URI.buildUpon().appendPath(Integer.toString(movieId)).build(),
+                    null,
+                    null);
+            return rowsDeleted != 0;
+        });
     }
 }
