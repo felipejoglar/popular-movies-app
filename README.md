@@ -10,7 +10,7 @@ The data layer is accessed via Repository pattern and make use of `ContentProvid
 
 ## Features
 
-Main navigation with most popular and top rated movies plus detailed view | Launch Youtube app to watch the movie videos directly form the app | Launch Youtube app to watch the movie videos directly form the app
+Main navigation with most popular and top rated movies plus detailed view | Launch Youtube app to watch the movie videos directly from the app | Add and remove a movie from your favorite list
 ------------ | ------------- | -------------
 <img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/main-navigation.gif" width="250px" alt="Main Navigation"/> | <img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/youtube-videos.gif" width="250px" alt="Youtube Videos"/> | <img src="https://raw.githubusercontent.com/fjoglar/popular-movies-app/master/assets/favorites.gif" width="250px" alt="Favorites Functionality"/>
 
